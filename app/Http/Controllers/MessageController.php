@@ -17,46 +17,51 @@ class MessageController extends Controller
     {
         $currentUser = $request->user();
 
-        // 1. Get list of distinct user IDs that current user has exchanged messages with
-        $contactIds = Message::where('sender_id', $currentUser->id)
-            ->orWhere('receiver_id', $currentUser->id)
-            ->latest()
-            ->get()
-            ->map(function ($msg) use ($currentUser) {
-                return (int) ($msg->sender_id === $currentUser->id ? $msg->receiver_id : $msg->sender_id);
-            })
-            ->unique()
-            ->values();
+        // 1. Get list of distinct contact IDs via database UNION (no full-table load into RAM)
+        $sentContactIds = Message::where('sender_id', $currentUser->id)
+            ->select('receiver_id as contact_id');
 
-        // Fetch user contacts with last message and unread count
-        $contacts = User::whereIn('id', $contactIds)
-            ->get()
-            ->map(function ($contact) use ($currentUser) {
-                $lastMessage = Message::where(function ($q) use ($currentUser, $contact) {
-                    $q->where('sender_id', $currentUser->id)->where('receiver_id', $contact->id);
-                })->orWhere(function ($q) use ($currentUser, $contact) {
-                    $q->where('sender_id', $contact->id)->where('receiver_id', $currentUser->id);
-                })->latest()->first();
+        $contactIds = Message::where('receiver_id', $currentUser->id)
+            ->select('sender_id as contact_id')
+            ->union($sentContactIds)
+            ->pluck('contact_id');
 
-                $unreadCount = Message::where('sender_id', $contact->id)
-                    ->where('receiver_id', $currentUser->id)
-                    ->where('is_read', false)
-                    ->count();
+        if ($contactIds->isEmpty()) {
+            $contacts = collect();
+        } else {
+            // Batch unread counts for all contacts in a single query
+            $unreadCounts = Message::where('receiver_id', $currentUser->id)
+                ->whereIn('sender_id', $contactIds)
+                ->where('is_read', false)
+                ->selectRaw('sender_id, count(*) as count')
+                ->groupBy('sender_id')
+                ->pluck('count', 'sender_id');
 
-                return [
-                    'id'               => $contact->id,
-                    'name'             => $contact->name,
-                    'username'         => $contact->username,
-                    'avatar_url'       => $contact->avatar_url,
-                    'status'           => $contact->status,
-                    'last_message'     => $lastMessage?->message,
-                    'last_message_at'  => $lastMessage?->created_at_human,
-                    'last_message_raw' => $lastMessage?->created_at,
-                    'unread_count'     => $unreadCount,
-                ];
-            })
-            ->sortByDesc('last_message_raw')
-            ->values();
+            // Fetch user contacts with last message and unread count
+            $contacts = User::whereIn('id', $contactIds)
+                ->get()
+                ->map(function ($contact) use ($currentUser, $unreadCounts) {
+                    $lastMessage = Message::where(function ($q) use ($currentUser, $contact) {
+                        $q->where('sender_id', $currentUser->id)->where('receiver_id', $contact->id);
+                    })->orWhere(function ($q) use ($currentUser, $contact) {
+                        $q->where('sender_id', $contact->id)->where('receiver_id', $currentUser->id);
+                    })->latest()->first();
+
+                    return [
+                        'id'               => $contact->id,
+                        'name'             => $contact->name,
+                        'username'         => $contact->username,
+                        'avatar_url'       => $contact->avatar_url,
+                        'status'           => $contact->status,
+                        'last_message'     => $lastMessage?->message,
+                        'last_message_at'  => $lastMessage?->created_at_human,
+                        'last_message_raw' => $lastMessage?->created_at,
+                        'unread_count'     => $unreadCounts[$contact->id] ?? 0,
+                    ];
+                })
+                ->sortByDesc('last_message_raw')
+                ->values();
+        }
 
         // 2. Active contact selection
         $activeContact = null;
