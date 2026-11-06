@@ -60,8 +60,7 @@ class BotController extends Controller
             try {
                 $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}";
 
-                $response = Http::withoutVerifying()
-                    ->timeout(25)
+                $response = Http::timeout(25)
                     ->post($endpoint, [
                         'systemInstruction' => [
                             'parts' => [
