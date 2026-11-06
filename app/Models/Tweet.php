@@ -81,8 +81,11 @@ class Tweet extends Model
 
     public function scopeWithInteractionDetails($query, $userId = null)
     {
+        $hasColumn = \Illuminate\Support\Facades\Schema::hasColumn('tweets', 'views_count');
+
         return $query->with(['user', 'quoteOf.user'])
-            ->withCount(['replies', 'retweets', 'likes', 'views'])
+            ->withCount(['replies', 'retweets', 'likes'])
+            ->when(! $hasColumn, fn ($q) => $q->withCount('views'))
             ->when($userId, function ($q) use ($userId) {
                 $q->withExists([
                     'likes as is_liked' => fn ($subQuery) => $subQuery->where('user_id', $userId),

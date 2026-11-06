@@ -90,6 +90,10 @@ class TweetController extends Controller
                 'ip_address' => $ip,
                 'session_id' => $sessionId,
             ]);
+
+            if (\Illuminate\Support\Facades\Schema::hasColumn('tweets', 'views_count')) {
+                $tweet->increment('views_count');
+            }
         }
 
         $replies = Tweet::where('parent_id', $tweet->id)
