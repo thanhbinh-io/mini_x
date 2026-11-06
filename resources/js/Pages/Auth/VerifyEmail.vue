@@ -8,6 +8,10 @@ const props = defineProps({
     status: {
         type: String,
     },
+    isLocal: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const page = usePage();
@@ -19,7 +23,9 @@ const submit = () => {
 };
 
 const devVerify = () => {
-    devForm.post(route('verification.quick_verify'));
+    if (props.isLocal) {
+        devForm.post('/email/quick-verify');
+    }
 };
 
 const verificationLinkSent = computed(
@@ -85,8 +91,8 @@ const verificationLinkSent = computed(
             </div>
         </form>
 
-        <!-- Nút kích hoạt nhanh dành cho Giảng viên chấm bài / Môi trường kiểm thử Local -->
-        <div class="mt-8 pt-4 border-t border-gray-800 text-center">
+        <!-- Nút kích hoạt nhanh chỉ hiển thị ở môi trường kiểm thử Local -->
+        <div v-if="isLocal" class="mt-8 pt-4 border-t border-gray-800 text-center">
             <p class="text-xs text-gray-500 mb-2">
                 Dành cho Giảng viên chấm bài / Môi trường kiểm thử Local:
             </p>
