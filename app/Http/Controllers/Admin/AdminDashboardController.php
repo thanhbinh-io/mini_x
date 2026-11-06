@@ -146,7 +146,7 @@ class AdminDashboardController extends Controller
         }
 
         $newStatus = $user->status === 'active' ? 'suspended' : 'active';
-        $user->update(['status' => $newStatus]);
+        $user->forceFill(['status' => $newStatus])->save();
 
         $message = $newStatus === 'suspended'
             ? "Tài khoản @{$user->username} đã bị đình chỉ."
@@ -167,7 +167,7 @@ class AdminDashboardController extends Controller
         }
 
         $newRole = $user->role === 'admin' ? 'user' : 'admin';
-        $user->update(['role' => $newRole]);
+        $user->forceFill(['role' => $newRole])->save();
 
         $message = $newRole === 'admin'
             ? "Đã nâng @{$user->username} lên Admin."
