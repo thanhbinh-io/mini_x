@@ -98,32 +98,74 @@ class UserProfileController extends Controller
         $user->website = $request->input('website');
         $user->birthdate = $request->input('birthdate');
 
+        $oldAvatar = null;
+        $oldBanner = null;
+
         // Handle avatar upload
         if ($request->hasFile('avatar')) {
+            $oldAvatar = $user->avatar_path;
             $avatarFile = $request->file('avatar');
-            $avatarName = 'avatar_' . $user->id . '_' . time() . '.' . $avatarFile->getClientOriginalExtension();
-            $targetDir = public_path('/pics/avatars/');
-            if (! file_exists($targetDir)) {
-                mkdir($targetDir, 0755, true);
-            }
-            $avatarFile->move($targetDir, $avatarName);
-            $user->avatar_path = '/pics/avatars/' . $avatarName;
+            $extension = $avatarFile->guessExtension() ?: ($avatarFile->extension() ?: 'jpg');
+            $avatarName = \Illuminate\Support\Str::random(40) . '.' . $extension;
+            $savedPath = $avatarFile->storeAs('avatars', $avatarName, 'public');
+            $user->avatar_path = '/storage/' . $savedPath;
         }
 
         // Handle banner upload
         if ($request->hasFile('banner')) {
+            $oldBanner = $user->banner_path;
             $bannerFile = $request->file('banner');
-            $bannerName = 'banner_' . $user->id . '_' . time() . '.' . $bannerFile->getClientOriginalExtension();
-            $targetDir = public_path('/pics/banners/');
-            if (! file_exists($targetDir)) {
-                mkdir($targetDir, 0755, true);
-            }
-            $bannerFile->move($targetDir, $bannerName);
-            $user->banner_path = '/pics/banners/' . $bannerName;
+            $extension = $bannerFile->guessExtension() ?: ($bannerFile->extension() ?: 'jpg');
+            $bannerName = \Illuminate\Support\Str::random(40) . '.' . $extension;
+            $savedPath = $bannerFile->storeAs('banners', $bannerName, 'public');
+            $user->banner_path = '/storage/' . $savedPath;
         }
 
         $user->save();
 
+        // Safely delete previous image files only after database persistence succeeds
+        if ($oldAvatar) {
+            $this->deleteOldImage($oldAvatar, 'avatars');
+        }
+        if ($oldBanner) {
+            $this->deleteOldImage($oldBanner, 'banners');
+        }
+
         return redirect()->back();
+    }
+
+    /**
+     * Safely delete an existing user image from storage or legacy paths.
+     */
+    protected function deleteOldImage(?string $path, string $type): void
+    {
+        if (empty($path) || str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return;
+        }
+
+        // Prevent path traversal
+        if (str_contains($path, '..')) {
+            return;
+        }
+
+        // Handle modern /storage/ path
+        if (str_starts_with($path, '/storage/')) {
+            $relativePath = ltrim(substr($path, 9), '/');
+            if (str_starts_with($relativePath, $type . '/')) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($relativePath);
+            }
+            return;
+        }
+
+        // Handle legacy /pics/ path in public directory
+        if (str_starts_with($path, "/pics/{$type}/")) {
+            $fullPath = public_path($path);
+            $realPath = realpath($fullPath);
+            $allowedBase = realpath(public_path("pics/{$type}"));
+
+            if ($realPath && $allowedBase && str_starts_with($realPath, $allowedBase) && is_file($realPath)) {
+                @unlink($realPath);
+            }
+        }
     }
 }
