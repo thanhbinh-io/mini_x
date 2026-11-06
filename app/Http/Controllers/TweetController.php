@@ -7,6 +7,7 @@ use App\Models\Tweet;
 use App\Models\TweetView;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -167,7 +168,7 @@ class TweetController extends Controller
      */
     public function update(Request $request, Tweet $tweet): RedirectResponse
     {
-        $this->authorize('update', $tweet);
+        Gate::authorize('update', $tweet);
 
         $request->validate([
             'tweet' => 'required_without:file|nullable|string|max:280',
@@ -214,7 +215,7 @@ class TweetController extends Controller
      */
     public function destroy(Tweet $tweet): RedirectResponse
     {
-        $this->authorize('delete', $tweet);
+        Gate::authorize('delete', $tweet);
 
         $tweet->delete();
 
