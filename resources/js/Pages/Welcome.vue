@@ -263,8 +263,4 @@ const loadMore = () => {
     </TwitterLayout>
 </template>
 
-<style>
-body {
-    background-color: black;
-}
-</style>
+

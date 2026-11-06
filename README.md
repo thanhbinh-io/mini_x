@@ -1,59 +1,113 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🐦 MiniX – Mạng xã hội X (Twitter) Clone Full-Stack
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Dự án xây dựng nền tảng mạng xã hội hiện đại lấy cảm hứng từ giao diện và trải nghiệm của **X.com (Twitter)**, tích hợp trợ lý trí tuệ nhân tạo **MiniX AI (Google Gemini)**, hệ thống **nhắn tin trực tiếp 1-1 thời gian thực**, **cài đặt quyền riêng tư nâng cao** và **bảng điều khiển quản trị viên**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 👥 Nhóm tác giả thực hiện (Phân chia đồng đều 25% mỗi thành viên)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Thành viên | Tỷ lệ | Phân hệ đảm nhiệm |
+|---|:---:|---|
+| **Nguyễn Thanh Bình (Trưởng nhóm)** | **25%** | **Nền tảng kiến trúc (Core Architecture):** Thiết lập Laravel 12 + Vue 3 Inertia, quản lý GitHub Repository, Code Review và Merge Pull Request. |
+| **Võ Tấn Đạt** | **25%** | **Hệ thống bài viết & Tương tác:** Thả tim (Like), Đăng lại (Retweet), Đánh dấu (Bookmark), Chuỗi hội thoại (Thread replies), Khám phá xu hướng & Tìm kiếm. |
+| **Nguyễn Quốc Khánh** | **25%** | **Mạng lưới kết nối & Nhắn tin:** Theo dõi (Follow), Chặn (Block), Tắt tiếng (Mute), Trang hồ sơ cá nhân tùy chỉnh và Hộp thư nhắn tin 1-1 (Direct Messages). |
+| **Huỳnh Triệu An** | **25%** | **Trợ lý AI & Quản trị:** Tích hợp MiniX AI Bot (Gemini), Trung tâm Thông báo (Notifications), Cài đặt bảo mật, Creator Studio & Admin Dashboard. |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Công nghệ sử dụng
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Backend:** [Laravel 12](https://laravel.com/) (PHP 8.2+) – Kiến trúc MVC, Eloquent ORM, Authentication, Authorization Policies, Storage Disks.
+- **Frontend:** [Vue 3](https://vuejs.org/) (`<script setup>` Composition API) – Reactive Components.
+- **Single Page Application (SPA):** [Inertia.js](https://inertiajs.com/) – Kết nối mượt mà giữa Laravel và Vue mà không cần viết REST API thủ công, tải trang tức thì không giật lag.
+- **Giao diện & Thiết kế:** [Tailwind CSS](https://tailwindcss.com/) – Thiết kế chuẩn X.com, hỗ trợ đầy đủ **Dark Mode** và **Light Mode**.
+- **Trí tuệ nhân tạo (AI):** [Google Gemini API](https://ai.google.dev/) – Phản hồi thông minh, render Markdown code block có nút sao chép mã.
+- **Cơ sở dữ liệu:** MySQL (MariaDB trong XAMPP).
+- **Bộ đóng gói tài nguyên:** [Vite](https://vitejs.dev/) – Tốc độ build siêu nhanh.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 📥 Hướng dẫn tải về và cài đặt chi tiết (Dành cho Giảng viên / Người chấm bài)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Bước 1: Clone mã nguồn về máy
+```bash
+git clone https://github.com/thanhbinh-io/mini_x.git
+cd mini_x
+```
 
-### Premium Partners
+### Bước 2: Cài đặt thư viện Backend
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Bước 3: Cài đặt thư viện Frontend
+```bash
+npm install
+```
 
-## Contributing
+### Bước 4: Tạo file cấu hình môi trường (.env)
+- **Windows (PowerShell):**
+  ```powershell
+  copy .env.example .env
+  ```
+- **macOS / Linux:**
+  ```bash
+  cp .env.example .env
+  ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Tạo khóa bảo mật cho ứng dụng:
+```bash
+php artisan key:generate
+```
 
-## Code of Conduct
+### Bước 5: Cấu hình Cơ sở dữ liệu
+1. Mở **XAMPP Control Panel**, nhấn **Start** cả **Apache** và **MySQL**.
+2. Mở trình duyệt vào `http://localhost/phpmyadmin`, tạo một Database mới có tên: **`mini_x`** (Bảng mã: `utf8mb4_unicode_ci`).
+3. File `.env` mặc định đã được cấu hình sẵn kết nối tới MySQL XAMPP:
+   ```ini
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=mini_x
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Bước 6: Tạo liên kết thư mục lưu trữ ảnh/video
+```bash
+php artisan storage:link
+```
 
-## Security Vulnerabilities
+### Bước 7: Khởi tạo bảng dữ liệu và nạp dữ liệu mẫu
+```bash
+php artisan migrate:fresh --seed
+```
+*(Lệnh này tự động tạo 15 bảng cơ sở dữ liệu, nạp sẵn các tài khoản demo chuẩn, bài viết mẫu có ảnh/video và cấp quyền Admin).*
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Bước 8: Biên dịch giao diện Frontend
+```bash
+npm run build
+```
 
-## License
+### Bước 9: Khởi chạy máy chủ ứng dụng
+```bash
+php artisan serve
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Truy cập trình duyệt: **`http://127.0.0.1:8000`**
+
+---
+
+## 👤 Danh sách tài khoản mẫu (Demo Accounts)
+
+Tất cả tài khoản demo đều dùng chung mật khẩu quy ước chuẩn: **`password`**
+
+| Vai trò | Tên hiển thị | Tên tài khoản | Email đăng nhập | Mật khẩu |
+|---|---|---|---|---|
+| 👑 **Admin Quản trị** | Demo User | `@demouser` | `demo@example.com` | `password` |
+| 🧑 **Người dùng mẫu** | Elon Musk | `@elonmusk` | `elon@x.com` | `password` |
+| 🧑 **Người dùng mẫu** | Taylor Otwell | `@taylorotwell` | `taylor@laravel.com` | `password` |
+| 🧑 **Người dùng mẫu** | Evan You | `@youyuxi` | `evan@vuejs.org` | `password` |
+| 🧑 **Người dùng mẫu** | John Weeks | `@johnweeksdev` | `john@example.com` | `password` |
+
+> 💡 **Ghi chú về mật khẩu:** Khi người dùng tự tay đăng ký tài khoản mới (`/register`) hoặc đổi mật khẩu trong phần cài đặt (`/settings/account`), hệ thống tự động áp dụng bộ quy tắc kiểm tra bảo mật chuẩn của Laravel (`Rules\Password::defaults()`).
