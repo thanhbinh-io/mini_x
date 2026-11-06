@@ -47,6 +47,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:6,1')
         ->name('verification.send');
 
+    Route::post('email/quick-verify', function (Illuminate\Http\Request $request) {
+        $request->user()->markEmailAsVerified();
+        return redirect()->route('tweets.index')->with('success', 'Tài khoản đã được kích hoạt thành công!');
+    })->name('verification.quick_verify');
+
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 

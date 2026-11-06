@@ -59,10 +59,14 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        try {
+            event(new Registered($user));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Email verification send failed: ' . $e->getMessage());
+        }
 
         Auth::login($user);
 
-        return redirect()->route('tweets.index');
+        return redirect()->route('verification.notice');
     }
 }

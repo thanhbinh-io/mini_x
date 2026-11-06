@@ -15,13 +15,13 @@ class VerifyEmailController extends Controller
     public function __invoke(EmailVerificationRequest $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+            return redirect()->route('tweets.index')->with('success', 'Email đã được xác thực trước đó!');
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+        return redirect()->route('tweets.index')->with('success', 'Xác thực tài khoản thành công! Chào mừng bạn đến với MiniX.');
     }
 }

@@ -24,7 +24,7 @@ Route::get('/explore', [SearchController::class, 'explore'])->name('explore');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/{username}/status/{id}', [TweetController::class, 'show'])->name('tweets.show');
 
-Route::middleware(['auth', 'check.suspended'])->group(function () {
+Route::middleware(['auth', 'verified', 'check.suspended'])->group(function () {
     Route::post('/tweets', [TweetController::class, 'store'])->name('tweets.store');
     Route::patch('/tweets/{tweet}', [TweetController::class, 'update'])->name('tweets.update');
     Route::delete('/tweets/{tweet}', [TweetController::class, 'destroy'])->name('tweets.destroy');
