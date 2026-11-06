@@ -25,7 +25,7 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/{username}/status/{id}', [TweetController::class, 'show'])->name('tweets.show');
 
 Route::middleware(['auth', 'verified', 'check.suspended'])->group(function () {
-    Route::post('/tweets', [TweetController::class, 'store'])->name('tweets.store');
+    Route::post('/tweets', [TweetController::class, 'store'])->middleware('throttle:10,1')->name('tweets.store');
     Route::patch('/tweets/{tweet}', [TweetController::class, 'update'])->name('tweets.update');
     Route::delete('/tweets/{tweet}', [TweetController::class, 'destroy'])->name('tweets.destroy');
 
@@ -36,7 +36,7 @@ Route::middleware(['auth', 'verified', 'check.suspended'])->group(function () {
 
     // AI Assistant (MiniX AI / Bot)
     Route::get('/bot', [BotController::class, 'index'])->name('bot.index');
-    Route::post('/bot/chat', [BotController::class, 'chat'])->name('bot.chat');
+    Route::post('/bot/chat', [BotController::class, 'chat'])->middleware('throttle:5,1')->name('bot.chat');
     Route::post('/bot/clear', [BotController::class, 'clear'])->name('bot.clear');
 
     // Notifications
@@ -46,7 +46,7 @@ Route::middleware(['auth', 'verified', 'check.suspended'])->group(function () {
     // Direct Messages (1-1 Chat)
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/messages/recipients', [MessageController::class, 'recipients'])->name('messages.recipients');
-    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::post('/messages', [MessageController::class, 'store'])->middleware('throttle:30,1')->name('messages.store');
 
     // Follow, Block, Mute
     Route::post('/users/{user}/follow', [FollowController::class, 'toggle'])->name('users.follow');
