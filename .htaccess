@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. Chặn triệt để truy cập trực tiếp các tệp tin và thư mục nhạy cảm
+    RewriteRule ^\.env.* - [F,L,NC]
+    RewriteRule ^storage/(app|framework|logs)/.* - [F,L,NC]
+    RewriteRule ^vendor/.* - [F,L,NC]
+    RewriteRule ^\.git.* - [F,L,NC]
+    RewriteRule ^database/.* - [F,L,NC]
+    RewriteRule \.(sql|log|md|lock)$ - [F,L,NC]
+
+    # 2. Điều hướng toàn bộ lưu lượng vào thư mục public/
+    # Điều kiện loại trừ chống lặp rewrite vô hạn
+    RewriteCond %{REQUEST_URI} !/public/ [NC]
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
