@@ -81,11 +81,11 @@ Trợ lý **MiniX AI** tích hợp trực tiếp mô hình ngôn ngữ lớn c�
 2. **Tạo API Key:**
    - Tại menu bên trái, chọn **Get API key** (hoặc truy cập thẳng [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)).
    - Bấm nút **Create API key** $\rightarrow$ Chọn **Create API key in new project** (hoặc chọn project Google Cloud sẵn có nếu có).
-   - Hệ thống sẽ hiển thị một chuỗi ký tự dạng `AIzaSy...`. Bấm **Copy** để sao chép khóa này.
+   - Hệ thống sẽ hiển thị một chuỗi ký tự khóa API của bạn. Bấm **Copy** để sao chép khóa này.
 3. **Cấu hình vào file `.env`:**
    - Mở file `.env` ở thư mục gốc của dự án, tìm đến 2 dòng sau và dán khóa vừa copy vào:
    ```ini
-   GEMINI_API_KEY=AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   GEMINI_API_KEY=your_gemini_api_key_here
    GEMINI_MODEL=gemini-3.5-flash-lite
    ```
 4. **Áp dụng cấu hình:**
@@ -118,7 +118,7 @@ MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
 MAIL_USERNAME=email_cua_ban@gmail.com
-MAIL_PASSWORD=abcdefghijklmnop             # Dán 16 ký tự App Password tạo ở bước trên (không khoảng trắng)
+MAIL_PASSWORD="your_16_char_app_password"   # Dán 16 ký tự App Password tạo ở bước trên (không khoảng trắng)
 MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS="email_cua_ban@gmail.com"
 MAIL_FROM_NAME="MiniX"
