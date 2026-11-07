@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import TwitterLayout from '@/Layouts/TwitterLayout.vue';
 import Heart from 'vue-material-design-icons/Heart.vue';
@@ -33,24 +33,37 @@ const markAllRead = () => {
         preserveScroll: true,
     });
 };
+
+let notifPollTimer = null;
+onMounted(() => {
+    notifPollTimer = setInterval(() => {
+        router.reload({ only: ['notifications'], preserveScroll: true });
+    }, 4000);
+});
+
+onUnmounted(() => {
+    if (notifPollTimer) {
+        clearInterval(notifPollTimer);
+    }
+});
 </script>
 
 <template>
-    <Head title="Notifications / Twitter" />
+    <Head title="Notifications" />
 
     <TwitterLayout>
-        <div class="text-white min-h-screen border-b border-gray-800">
+        <div class="text-gray-900 dark:text-white min-h-screen border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black transition-colors duration-200">
             <!-- Header bar -->
-            <div class="sticky top-0 bg-black/80 backdrop-blur-md z-20 flex items-center justify-between px-4 py-3 border-b border-gray-800">
+            <div class="sticky top-0 bg-white/80 dark:bg-black/80 backdrop-blur-md z-20 flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800">
                 <div>
-                    <h1 class="text-xl font-bold leading-tight">Notifications</h1>
+                    <h1 class="text-xl font-bold leading-tight text-gray-900 dark:text-white">Notifications</h1>
                 </div>
 
                 <button
                     v-if="notifList && notifList.length > 0"
                     type="button"
                     @click="markAllRead"
-                    class="flex items-center space-x-1.5 text-xs font-semibold text-gray-400 hover:text-white border border-gray-700 hover:border-gray-500 px-3 py-1.5 rounded-full transition cursor-pointer"
+                    class="flex items-center space-x-1.5 text-xs font-semibold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 px-3 py-1.5 rounded-full transition cursor-pointer"
                 >
                     <CheckAll :size="16" />
                     <span>Mark all as read</span>
@@ -58,12 +71,12 @@ const markAllRead = () => {
             </div>
 
             <!-- Notifications List -->
-            <div v-if="notifList && notifList.length > 0" class="divide-y divide-gray-800">
+            <div v-if="notifList && notifList.length > 0" class="divide-y divide-gray-200 dark:divide-gray-800">
                 <div
                     v-for="notif in notifList"
                     :key="notif.id"
-                    :class="!notif.read_at ? 'bg-blue-950/20' : ''"
-                    class="flex p-4 hover:bg-gray-950 transition"
+                    :class="!notif.read_at ? 'bg-blue-50/60 dark:bg-blue-950/20' : ''"
+                    class="flex p-4 hover:bg-gray-50 dark:hover:bg-gray-950 transition"
                 >
                     <!-- Notification Type Icon -->
                     <div class="mr-4 flex-shrink-0 flex justify-end w-8 pt-0.5">
@@ -83,13 +96,13 @@ const markAllRead = () => {
                                 <img
                                     :src="notif.data.sender_avatar || 'https://ui-avatars.com/api/?name=User&background=1C9CEF&color=fff'"
                                     :alt="notif.data.sender_name"
-                                    class="w-8 h-8 rounded-full object-cover bg-gray-700"
+                                    class="w-8 h-8 rounded-full object-cover bg-gray-200 dark:bg-gray-700"
                                 />
                             </Link>
                         </div>
 
-                        <div class="text-[15px] text-gray-300">
-                            <Link :href="route('users.profile', notif.data.sender_username)" class="font-bold text-white hover:underline">
+                        <div class="text-[15px] text-gray-700 dark:text-gray-300">
+                            <Link :href="route('users.profile', notif.data.sender_username)" class="font-bold text-gray-900 dark:text-white hover:underline">
                                 {{ notif.data.sender_name }}
                             </Link>
                             <span v-if="notif.data.type === 'like'"> liked your post</span>
@@ -104,7 +117,7 @@ const markAllRead = () => {
                         <Link
                             v-if="notif.data.tweet_id"
                             :href="`/${notif.data.sender_username}/status/${notif.data.tweet_id}`"
-                            class="block text-sm text-gray-400 hover:text-white mt-1 line-clamp-2 transition bg-gray-900/50 p-2.5 rounded-xl border border-gray-800"
+                            class="block text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mt-1 line-clamp-2 transition bg-gray-50 dark:bg-gray-900/50 p-2.5 rounded-xl border border-gray-200 dark:border-gray-800"
                         >
                             {{ notif.data.tweet_text || 'Xem bài viết...' }}
                         </Link>
@@ -114,7 +127,7 @@ const markAllRead = () => {
 
             <!-- Empty State -->
             <div v-else class="py-24 px-6 text-center max-w-sm mx-auto">
-                <div class="text-2xl font-black text-white mb-2">
+                <div class="text-2xl font-black text-gray-900 dark:text-white mb-2">
                     Nothing to see here — yet
                 </div>
                 <p class="text-sm text-gray-500 leading-relaxed">
@@ -131,7 +144,7 @@ const markAllRead = () => {
                     v-html="link.label"
                     :class="[
                         'px-3.5 py-1.5 rounded-full text-xs font-semibold border transition',
-                        link.active ? 'bg-[#1C9CEF] border-[#1C9CEF] text-white' : 'border-gray-700 text-gray-400 hover:text-white',
+                        link.active ? 'bg-[#1C9CEF] border-[#1C9CEF] text-white' : 'border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800',
                         !link.url ? 'opacity-40 pointer-events-none' : ''
                     ]"
                 />

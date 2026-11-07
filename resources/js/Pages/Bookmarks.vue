@@ -17,26 +17,26 @@ const tweetItems = computed(() => Array.isArray(props.tweets) ? props.tweets : (
 </script>
 
 <template>
-    <Head title="Bookmarks / Twitter" />
+    <Head title="Bookmarks" />
 
     <TwitterLayout>
-        <div class="text-white min-h-screen">
+        <div class="text-gray-900 dark:text-white min-h-screen bg-white dark:bg-black transition-colors duration-200">
             <!-- Header -->
-            <div class="p-4 border-b border-gray-800 sticky top-0 bg-black/80 backdrop-blur-md z-10">
-                <h1 class="text-xl font-bold text-white">Bookmarks</h1>
+            <div class="p-4 border-b border-gray-200 dark:border-gray-800 sticky top-0 bg-white/80 dark:bg-black/80 backdrop-blur-md z-10">
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white">Bookmarks</h1>
                 <p class="text-xs text-gray-500">@{{ user?.username }}</p>
             </div>
 
             <!-- Empty State -->
             <div v-if="!tweetItems || tweetItems.length === 0" class="py-20 px-8 text-center max-w-sm mx-auto">
-                <div class="text-2xl font-black text-white mb-2">Save posts for later</div>
+                <div class="text-2xl font-black text-gray-900 dark:text-white mb-2">Save posts for later</div>
                 <p class="text-sm text-gray-500 leading-relaxed">
                     Don’t let the good ones fly away! Bookmark posts to easily find them again in the future.
                 </p>
             </div>
 
             <!-- Bookmarked Tweets List -->
-            <div v-else class="divide-y divide-gray-800">
+            <div v-else class="divide-y divide-gray-200 dark:divide-gray-800">
                 <div v-for="tweet in tweetItems" :key="tweet.id">
                     <Tweet :tweet="tweet" />
                 </div>

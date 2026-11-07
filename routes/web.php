@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\BlockMuteController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\BotController;
-use App\Http\Controllers\CreatorStudioController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MessageController;
@@ -41,6 +40,7 @@ Route::middleware(['auth', 'verified', 'check.suspended'])->group(function () {
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read_all');
+    Route::get('/api/unread-counts', [NotificationController::class, 'unreadCounts'])->name('api.unread_counts');
 
     // Direct Messages (1-1 Chat)
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
@@ -71,10 +71,8 @@ Route::middleware(['auth', 'verified', 'check.suspended'])->group(function () {
         Route::patch('/notifications', [SettingsController::class, 'updateNotifications'])->name('notifications.update');
         Route::get('/export-data', [SettingsController::class, 'exportData'])->name('export');
         Route::post('/deactivate', [SettingsController::class, 'deactivate'])->name('deactivate');
+        Route::delete('/account', [SettingsController::class, 'destroyAccount'])->name('destroy');
     });
-
-    // Creator Studio
-    Route::get('/creator-studio', [CreatorStudioController::class, 'index'])->name('creator_studio');
 });
 
 // Follower & Following lists
@@ -98,5 +96,5 @@ require __DIR__.'/auth.php';
 
 // Profile page route - placed at the bottom to avoid capturing reserved system endpoints
 Route::get('/{username}', [UserProfileController::class, 'show'])
-    ->where('username', '^(?!login|register|logout|profile|tweets|bookmarks|api|dashboard|settings|explore|notifications|messages|search|password|admin|reports|creator-studio|bot).*$')
+    ->where('username', '^(?!login|register|logout|profile|tweets|bookmarks|api|dashboard|settings|explore|notifications|messages|search|password|admin|reports|bot).*$')
     ->name('users.profile');

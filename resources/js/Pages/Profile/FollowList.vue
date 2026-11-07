@@ -64,20 +64,20 @@ const toggleFollow = async (user) => {
 </script>
 
 <template>
-    <Head :title="`${profileUser.name} (@${profileUser.username}) / Twitter`" />
+    <Head :title="`${profileUser.name} (@${profileUser.username})`" />
 
     <TwitterLayout>
-        <div class="text-white min-h-screen border-b border-gray-800">
+        <div class="text-gray-900 dark:text-white min-h-screen border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black transition-colors duration-200">
             <!-- Header bar with Back button -->
-            <div class="sticky top-0 bg-black/80 backdrop-blur-md z-20 flex items-center px-4 py-2 border-b border-gray-800 space-x-6">
+            <div class="sticky top-0 bg-white/80 dark:bg-black/80 backdrop-blur-md z-20 flex items-center px-4 py-2 border-b border-gray-200 dark:border-gray-800 space-x-6">
                 <Link
                     :href="route('users.profile', profileUser.username)"
-                    class="p-2 rounded-full hover:bg-gray-800 transition cursor-pointer"
+                    class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white transition cursor-pointer"
                 >
-                    <ArrowLeft fillColor="#ffffff" :size="20" />
+                    <ArrowLeft fillColor="currentColor" :size="20" />
                 </Link>
                 <div>
-                    <h1 class="text-xl font-bold leading-tight">
+                    <h1 class="text-xl font-bold leading-tight text-gray-900 dark:text-white">
                         {{ profileUser.name }}
                     </h1>
                     <p class="text-xs text-gray-500">
@@ -87,10 +87,10 @@ const toggleFollow = async (user) => {
             </div>
 
             <!-- Tab Row -->
-            <div class="flex border-b border-gray-800 text-sm font-bold text-gray-500">
+            <div class="flex border-b border-gray-200 dark:border-gray-800 text-sm font-bold text-gray-500">
                 <Link
                     :href="route('users.followers', profileUser.username)"
-                    :class="type === 'followers' ? 'text-white' : 'hover:bg-gray-900/50 hover:text-gray-300'"
+                    :class="type === 'followers' ? 'text-gray-900 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:text-gray-700 dark:hover:text-gray-300'"
                     class="flex-1 py-3.5 text-center transition cursor-pointer relative"
                 >
                     <span>Followers</span>
@@ -102,7 +102,7 @@ const toggleFollow = async (user) => {
 
                 <Link
                     :href="route('users.following', profileUser.username)"
-                    :class="type === 'following' ? 'text-white' : 'hover:bg-gray-900/50 hover:text-gray-300'"
+                    :class="type === 'following' ? 'text-gray-900 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:text-gray-700 dark:hover:text-gray-300'"
                     class="flex-1 py-3.5 text-center transition cursor-pointer relative"
                 >
                     <span>Following</span>
@@ -114,18 +114,18 @@ const toggleFollow = async (user) => {
             </div>
 
             <!-- User List -->
-            <div v-if="userList && userList.length > 0" class="divide-y divide-gray-800">
+            <div v-if="userList && userList.length > 0" class="divide-y divide-gray-200 dark:divide-gray-800">
                 <div
                     v-for="user in userList"
                     :key="user.id"
-                    class="flex items-start px-4 py-3 hover:bg-gray-950 transition"
+                    class="flex items-start px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-950 transition"
                 >
                     <!-- User Avatar -->
                     <Link :href="route('users.profile', user.username)" class="mr-3 flex-shrink-0">
                         <img
                             :src="user.avatar_url"
                             :alt="user.name"
-                            class="w-10 h-10 rounded-full object-cover"
+                            class="w-10 h-10 rounded-full object-cover bg-gray-200 dark:bg-gray-800"
                         />
                     </Link>
 
@@ -135,7 +135,7 @@ const toggleFollow = async (user) => {
                             <div>
                                 <Link
                                     :href="route('users.profile', user.username)"
-                                    class="font-bold text-white text-[15px] hover:underline truncate block"
+                                    class="font-bold text-gray-900 dark:text-white text-[15px] hover:underline truncate block"
                                 >
                                     {{ user.name }}
                                 </Link>
@@ -152,8 +152,8 @@ const toggleFollow = async (user) => {
                                 @mouseenter="hoverMap[user.id] = true"
                                 @mouseleave="hoverMap[user.id] = false"
                                 :class="isFollowing(user.id)
-                                    ? (isHovering(user.id) ? 'bg-red-950/40 border-red-600 text-red-500' : 'bg-black border-gray-600 text-white')
-                                    : 'bg-white hover:bg-gray-200 text-black border-transparent'"
+                                    ? (isHovering(user.id) ? 'bg-red-50 dark:bg-red-950/40 border-red-500 dark:border-red-600 text-red-600 dark:text-red-500' : 'bg-white dark:bg-black border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white')
+                                    : 'bg-gray-900 hover:bg-black text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black border-transparent shadow-sm'"
                                 class="border font-bold text-xs px-4 py-1.5 rounded-full transition cursor-pointer min-w-[96px]"
                             >
                                 <span v-if="isFollowing(user.id)">
@@ -164,7 +164,7 @@ const toggleFollow = async (user) => {
                         </div>
 
                         <!-- User Bio -->
-                        <p v-if="user.bio" class="text-sm text-gray-300 mt-1 whitespace-pre-line leading-snug">
+                        <p v-if="user.bio" class="text-sm text-gray-700 dark:text-gray-300 mt-1 whitespace-pre-line leading-snug">
                             {{ user.bio }}
                         </p>
                     </div>
@@ -173,7 +173,7 @@ const toggleFollow = async (user) => {
 
             <!-- Empty State -->
             <div v-else class="py-16 text-center text-gray-500 text-sm max-w-sm mx-auto px-4">
-                <div class="text-xl font-bold text-gray-200 mb-1">
+                <div class="text-xl font-bold text-gray-700 dark:text-gray-200 mb-1">
                     {{ type === 'followers' ? 'Looking for followers?' : 'Be in the know' }}
                 </div>
                 <p class="text-xs text-gray-500">
@@ -194,7 +194,7 @@ const toggleFollow = async (user) => {
                     v-html="link.label"
                     :class="[
                         'px-3.5 py-1.5 rounded-full text-xs font-semibold border transition',
-                        link.active ? 'bg-[#1C9CEF] border-[#1C9CEF] text-white' : 'border-gray-700 text-gray-400 hover:text-white',
+                        link.active ? 'bg-[#1C9CEF] border-[#1C9CEF] text-white' : 'border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800',
                         !link.url ? 'opacity-40 pointer-events-none' : ''
                     ]"
                 />

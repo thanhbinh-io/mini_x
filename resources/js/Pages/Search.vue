@@ -82,24 +82,24 @@ const userItems = computed(() => props.users?.data || []);
 </script>
 
 <template>
-    <Head :title="`${query} - Search / Twitter`" />
+    <Head :title="`${query} - Search`" />
 
     <TwitterLayout>
-        <div class="text-white min-h-screen border-b border-gray-800">
+        <div class="text-gray-900 dark:text-white min-h-screen border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black transition-colors duration-200">
             <!-- Header with Search Input -->
-            <div class="sticky top-0 bg-black/80 backdrop-blur-md z-20 px-4 py-2 border-b border-gray-800">
+            <div class="sticky top-0 bg-white/80 dark:bg-black/80 backdrop-blur-md z-20 px-4 py-2 border-b border-gray-200 dark:border-gray-800">
                 <div class="flex items-center space-x-4">
-                    <Link href="/" class="p-2 rounded-full hover:bg-gray-800 transition cursor-pointer">
-                        <ArrowLeft fillColor="#ffffff" :size="20" />
+                    <Link href="/" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white transition cursor-pointer">
+                        <ArrowLeft fillColor="currentColor" :size="20" />
                     </Link>
 
-                    <form @submit.prevent="handleSearch" class="flex-1 flex items-center bg-[#202327] rounded-full px-4 py-1.5 focus-within:ring-1 focus-within:ring-[#1C9CEF]">
+                    <form @submit.prevent="handleSearch" class="flex-1 flex items-center bg-gray-100 dark:bg-[#202327] rounded-full px-4 py-1.5 focus-within:ring-1 focus-within:ring-[#1C9CEF]">
                         <Magnify fillColor="#5e5c5c" :size="20" class="mr-2" />
                         <input
                             v-model="currentSearchTerm"
                             type="text"
-                            placeholder="Search Twitter"
-                            class="w-full bg-transparent border-0 focus:ring-0 text-white placeholder-gray-500 text-sm p-0"
+                            placeholder="Search MiniX"
+                            class="w-full bg-transparent border-0 focus:ring-0 text-gray-900 dark:text-white placeholder-gray-500 text-sm p-0"
                         />
                     </form>
                 </div>
@@ -109,7 +109,7 @@ const userItems = computed(() => props.users?.data || []);
                     <button
                         type="button"
                         @click="switchTab('top')"
-                        :class="type === 'top' ? 'text-white' : 'hover:bg-gray-900/50 hover:text-gray-300'"
+                        :class="type === 'top' ? 'text-gray-900 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:text-gray-700 dark:hover:text-gray-300'"
                         class="flex-1 py-3 text-center transition cursor-pointer relative"
                     >
                         <span>Top</span>
@@ -119,7 +119,7 @@ const userItems = computed(() => props.users?.data || []);
                     <button
                         type="button"
                         @click="switchTab('latest')"
-                        :class="type === 'latest' ? 'text-white' : 'hover:bg-gray-900/50 hover:text-gray-300'"
+                        :class="type === 'latest' ? 'text-gray-900 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:text-gray-700 dark:hover:text-gray-300'"
                         class="flex-1 py-3 text-center transition cursor-pointer relative"
                     >
                         <span>Latest</span>
@@ -129,7 +129,7 @@ const userItems = computed(() => props.users?.data || []);
                     <button
                         type="button"
                         @click="switchTab('people')"
-                        :class="type === 'people' ? 'text-white' : 'hover:bg-gray-900/50 hover:text-gray-300'"
+                        :class="type === 'people' ? 'text-gray-900 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:text-gray-700 dark:hover:text-gray-300'"
                         class="flex-1 py-3 text-center transition cursor-pointer relative"
                     >
                         <span>People</span>
@@ -140,17 +140,17 @@ const userItems = computed(() => props.users?.data || []);
 
             <!-- People Results -->
             <div v-if="type === 'people'">
-                <div v-if="userItems && userItems.length > 0" class="divide-y divide-gray-800">
+                <div v-if="userItems && userItems.length > 0" class="divide-y divide-gray-200 dark:divide-gray-800">
                     <div
                         v-for="u in userItems"
                         :key="u.id"
-                        class="flex items-start px-4 py-3 hover:bg-gray-950 transition"
+                        class="flex items-start px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-950 transition"
                     >
                         <Link :href="route('users.profile', u.username)" class="mr-3 flex-shrink-0">
                             <img
                                 :src="u.avatar_url"
                                 :alt="u.name"
-                                class="w-10 h-10 rounded-full object-cover bg-gray-700"
+                                class="w-10 h-10 rounded-full object-cover bg-gray-200 dark:bg-gray-700"
                             />
                         </Link>
 
@@ -159,7 +159,7 @@ const userItems = computed(() => props.users?.data || []);
                                 <div>
                                     <Link
                                         :href="route('users.profile', u.username)"
-                                        class="font-bold text-white text-[15px] hover:underline truncate block"
+                                        class="font-bold text-gray-900 dark:text-white text-[15px] hover:underline truncate block"
                                     >
                                         {{ u.name }}
                                     </Link>
@@ -175,8 +175,8 @@ const userItems = computed(() => props.users?.data || []);
                                     @mouseenter="hoverMap[u.id] = true"
                                     @mouseleave="hoverMap[u.id] = false"
                                     :class="isFollowing(u.id)
-                                        ? (isHovering(u.id) ? 'bg-red-950/40 border-red-600 text-red-500' : 'bg-black border-gray-600 text-white')
-                                        : 'bg-white hover:bg-gray-200 text-black border-transparent'"
+                                        ? (isHovering(u.id) ? 'bg-red-50 dark:bg-red-950/40 border-red-500 dark:border-red-600 text-red-600 dark:text-red-500' : 'bg-white dark:bg-black border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white')
+                                        : 'bg-gray-900 hover:bg-black text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black border-transparent shadow-sm'"
                                     class="border font-bold text-xs px-4 py-1.5 rounded-full transition cursor-pointer min-w-[96px]"
                                 >
                                     <span v-if="isFollowing(u.id)">
@@ -186,7 +186,7 @@ const userItems = computed(() => props.users?.data || []);
                                 </button>
                             </div>
 
-                            <p v-if="u.bio" class="text-sm text-gray-300 mt-1 whitespace-pre-line leading-snug">
+                            <p v-if="u.bio" class="text-sm text-gray-700 dark:text-gray-300 mt-1 whitespace-pre-line leading-snug">
                                 {{ u.bio }}
                             </p>
                         </div>
@@ -194,7 +194,7 @@ const userItems = computed(() => props.users?.data || []);
                 </div>
 
                 <div v-else class="py-24 text-center px-4 max-w-sm mx-auto">
-                    <div class="text-2xl font-black text-white mb-2">No results for "{{ query }}"</div>
+                    <div class="text-2xl font-black text-gray-900 dark:text-white mb-2">No results for "{{ query }}"</div>
                     <p class="text-sm text-gray-500">
                         Try searching for people by their display name or @username.
                     </p>
@@ -203,14 +203,14 @@ const userItems = computed(() => props.users?.data || []);
 
             <!-- Tweet Results ('top' or 'latest') -->
             <div v-else>
-                <div v-if="tweetItems && tweetItems.length > 0" class="divide-y divide-gray-800">
+                <div v-if="tweetItems && tweetItems.length > 0" class="divide-y divide-gray-200 dark:divide-gray-800">
                     <div v-for="t in tweetItems" :key="t.id">
                         <Tweet :tweet="t" />
                     </div>
                 </div>
 
                 <div v-else class="py-24 text-center px-4 max-w-sm mx-auto">
-                    <div class="text-2xl font-black text-white mb-2">No results for "{{ query }}"</div>
+                    <div class="text-2xl font-black text-gray-900 dark:text-white mb-2">No results for "{{ query }}"</div>
                     <p class="text-sm text-gray-500">
                         Try searching for something else, or check your spelling.
                     </p>
@@ -226,7 +226,7 @@ const userItems = computed(() => props.users?.data || []);
                     v-html="link.label"
                     :class="[
                         'px-3.5 py-1.5 rounded-full text-xs font-semibold border transition',
-                        link.active ? 'bg-[#1C9CEF] border-[#1C9CEF] text-white' : 'border-gray-700 text-gray-400 hover:text-white',
+                        link.active ? 'bg-[#1C9CEF] border-[#1C9CEF] text-white' : 'border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800',
                         !link.url ? 'opacity-40 pointer-events-none' : ''
                     ]"
                 />

@@ -128,19 +128,19 @@ const handleMessageClick = (e) => {
 </script>
 
 <template>
-    <Head title="Chat / Twitter" />
+    <Head title="Chat" />
 
     <TwitterLayout>
-        <div class="h-[100vh] flex text-white overflow-hidden w-full">
+        <div class="h-[100vh] flex text-gray-900 dark:text-white bg-white dark:bg-black overflow-hidden w-full transition-colors duration-200">
             <!-- Left Sub-column: Conversations List -->
-            <div class="w-full md:w-[360px] lg:w-[400px] border-r border-gray-800 flex flex-col h-full bg-black flex-shrink-0">
+            <div class="w-full md:w-[360px] lg:w-[400px] border-r border-gray-200 dark:border-gray-800 flex flex-col h-full bg-white dark:bg-black flex-shrink-0 transition-colors duration-200">
                 <!-- Header -->
-                <div class="p-4 border-b border-gray-800 flex items-center justify-between">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
                     <h1 class="text-xl font-bold">Chat</h1>
                 </div>
 
                 <!-- Contact List -->
-                <div class="flex-1 overflow-y-auto divide-y divide-gray-800/60 scrollbar-hide">
+                <div class="flex-1 overflow-y-auto divide-y divide-gray-200 dark:divide-gray-800/60 scrollbar-hide">
                     <div
                         v-if="contacts.length === 0"
                         class="p-8 text-center text-gray-500 text-sm"
@@ -152,18 +152,18 @@ const handleMessageClick = (e) => {
                         v-for="contact in contacts"
                         :key="contact.id"
                         @click="selectContact(contact)"
-                        :class="activeContact?.id === contact.id ? 'bg-gray-900/70 border-r-2 border-[#1C9CEF]' : 'hover:bg-gray-950'"
+                        :class="activeContact?.id === contact.id ? 'bg-blue-50 dark:bg-gray-900/70 border-r-2 border-[#1C9CEF]' : 'hover:bg-gray-100 dark:hover:bg-gray-950'"
                         class="p-4 flex items-center space-x-3 cursor-pointer transition"
                     >
                         <div class="relative flex-shrink-0">
                             <img
                                 :src="contact.avatar_url"
                                 :alt="contact.name"
-                                class="w-12 h-12 rounded-full object-cover bg-gray-800"
+                                class="w-12 h-12 rounded-full object-cover bg-gray-200 dark:bg-gray-800"
                             />
                             <span
                                 v-if="contact.unread_count > 0"
-                                class="absolute -top-1 -right-1 bg-[#1C9CEF] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-black"
+                                class="absolute -top-1 -right-1 bg-[#1C9CEF] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-black"
                             >
                                 {{ contact.unread_count }}
                             </span>
@@ -171,10 +171,10 @@ const handleMessageClick = (e) => {
 
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center justify-between">
-                                <p class="text-sm font-bold truncate text-white">{{ contact.name }}</p>
+                                <p class="text-sm font-bold truncate text-gray-900 dark:text-white">{{ contact.name }}</p>
                                 <span class="text-xs text-gray-500 ml-1 whitespace-nowrap">{{ contact.last_message_at }}</span>
                             </div>
-                            <p class="text-xs text-gray-400">@{{ contact.username }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">@{{ contact.username }}</p>
                             <p class="text-xs text-gray-500 truncate mt-1">
                                 {{ contact.last_message || 'Bắt đầu cuộc trò chuyện...' }}
                             </p>
@@ -184,20 +184,20 @@ const handleMessageClick = (e) => {
             </div>
 
             <!-- Right Sub-column: Active Chat Window -->
-            <div class="hidden md:flex flex-1 flex-col h-full bg-black">
+            <div class="hidden md:flex flex-1 flex-col h-full bg-white dark:bg-black transition-colors duration-200">
                 <!-- If contact selected -->
                 <template v-if="activeContact">
                     <!-- Chat Header -->
-                    <div class="px-5 py-3 border-b border-gray-800 flex items-center justify-between bg-black/80 backdrop-blur-md">
+                    <div class="px-5 py-3 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between bg-white/80 dark:bg-black/80 backdrop-blur-md">
                         <div class="flex items-center space-x-3">
                             <img
                                 :src="activeContact.avatar_url"
-                                class="w-10 h-10 rounded-full object-cover"
+                                class="w-10 h-10 rounded-full object-cover bg-gray-200 dark:bg-gray-800"
                             />
                             <div>
                                 <Link
                                     :href="route('users.profile', activeContact.username)"
-                                    class="text-sm font-bold text-white hover:underline"
+                                    class="text-sm font-bold text-gray-900 dark:text-white hover:underline"
                                 >
                                     {{ activeContact.name }}
                                 </Link>
@@ -223,8 +223,8 @@ const handleMessageClick = (e) => {
                             v-if="messages.length === 0"
                             class="text-center text-gray-500 py-16 text-sm"
                         >
-                            <AccountCircle :size="48" class="mx-auto mb-2 text-gray-700" />
-                            Gửi tin nhắn đầu tiên cho <span class="font-bold text-white">@{{ activeContact.username }}</span>!
+                            <AccountCircle :size="48" class="mx-auto mb-2 text-gray-400 dark:text-gray-700" />
+                            Gửi tin nhắn đầu tiên cho <span class="font-bold text-gray-900 dark:text-white">@{{ activeContact.username }}</span>!
                         </div>
 
                         <div
@@ -236,16 +236,16 @@ const handleMessageClick = (e) => {
                             <img
                                 v-if="!msg.is_mine"
                                 :src="activeContact.avatar_url"
-                                class="w-7 h-7 rounded-full object-cover flex-shrink-0 mb-1"
+                                class="w-7 h-7 rounded-full object-cover flex-shrink-0 mb-1 bg-gray-200 dark:bg-gray-800"
                             />
 
                             <div
-                                :class="msg.is_mine ? 'bg-[#1C9CEF] text-white rounded-2xl rounded-br-xs' : 'bg-gray-800 text-gray-200 rounded-2xl rounded-bl-xs'"
+                                :class="msg.is_mine ? 'bg-[#1C9CEF] text-white rounded-2xl rounded-br-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-200 border border-gray-200 dark:border-transparent rounded-2xl rounded-bl-xs'"
                                 class="max-w-[75%] px-4 py-2.5 text-sm leading-relaxed break-words shadow-sm"
                             >
                                 <p class="whitespace-pre-wrap" v-html="formatMessage(msg.message)"></p>
                                 <span
-                                    :class="msg.is_mine ? 'text-blue-100/70' : 'text-gray-400'"
+                                    :class="msg.is_mine ? 'text-blue-100/70' : 'text-gray-500 dark:text-gray-400'"
                                     class="text-[10px] block text-right mt-1"
                                 >
                                     {{ msg.created_at_human }}
@@ -255,14 +255,14 @@ const handleMessageClick = (e) => {
                     </div>
 
                     <!-- Message Input Box -->
-                    <div class="p-3 border-t border-gray-800 bg-gray-950">
+                    <div class="p-3 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
                         <form @submit.prevent="sendMessage" class="flex items-center space-x-2">
                             <input
                                 v-model="messageText"
                                 type="text"
                                 maxlength="2000"
                                 placeholder="Gõ tin nhắn mới..."
-                                class="flex-1 bg-gray-900 border border-gray-700 rounded-full px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#1C9CEF] transition"
+                                class="flex-1 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-full px-4 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-[#1C9CEF] transition"
                             />
 
                             <button
@@ -280,7 +280,7 @@ const handleMessageClick = (e) => {
                 <!-- If no contact selected -->
                 <div v-else class="flex-1 flex flex-col items-center justify-center p-8 text-center text-gray-500">
                     <div class="text-5xl mb-4">💬</div>
-                    <h2 class="text-xl font-bold text-white mb-2">Chọn một cuộc trò chuyện</h2>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Chọn một cuộc trò chuyện</h2>
                     <p class="text-sm max-w-sm">Chọn một người từ danh sách bên trái hoặc ghé thăm trang cá nhân để bắt đầu nhắn tin.</p>
                 </div>
             </div>

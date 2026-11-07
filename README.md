@@ -140,6 +140,7 @@ php artisan config:clear
 
 1. Bật **Apache** và **MySQL** trong ứng dụng **XAMPP Control Panel**.
 2. Mở trình duyệt vào `http://localhost/phpmyadmin`, tạo một Database mới có tên: **`mini_x`** (Bảng mã: `utf8mb4_unicode_ci`).
+   *(Hoặc có thể tạo nhanh bằng 1 dòng lệnh trong Terminal: `mysql -u root -e "CREATE DATABASE IF NOT EXISTS mini_x CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"`)*
 3. Khởi tạo cấu trúc bảng và nạp dữ liệu mẫu bằng lệnh:
    ```bash
    php artisan migrate --seed
@@ -158,6 +159,8 @@ php artisan storage:link
 ```bash
 npm run build
 ```
+> [!IMPORTANT]
+> Bước này là **bắt buộc** sau khi vừa clone mã nguồn về máy để Vite đóng gói toàn bộ giao diện Vue & Tailwind CSS vào thư mục `public/build/`.
 
 ### Bước 7: Khởi chạy ứng dụng
 ```bash
@@ -165,6 +168,64 @@ php artisan serve
 ```
 
 Mở trình duyệt và truy cập: **`http://127.0.0.1:8000`**
+
+---
+
+## 📱 Hướng Dẫn Mở Web Trên Thiết Bị Khác & Thiết Bị Ở Xa (Mobile / Remote Device)
+
+Để giảng viên hoặc người đánh giá có thể mở website MiniX trực tiếp trên điện thoại, máy tính bảng hoặc một thiết bị ở xa hoàn toàn (qua Internet), thực hiện theo các cách sau:
+
+### Cách 1: Thiết bị ở xa hoàn toàn qua Internet (Dành cho 4G/5G hoặc mạng khác)
+
+#### Lựa chọn A: Dùng `localtunnel` (Nhanh nhất, không cần tạo tài khoản)
+
+1. Đảm bảo **MySQL trong XAMPP** và lệnh `php artisan serve` đang chạy ở port 8000.
+2. Mở một cửa sổ Terminal mới và chạy:
+   ```powershell
+   npx localtunnel --port 8000
+   ```
+3. Bạn sẽ nhận được một URL dạng:
+   ```text
+   https://xxxx.loca.lt
+   ```
+4. Gửi link này cho thiết bị ở xa mở trực tiếp trên trình duyệt.
+
+> [!IMPORTANT]
+> **Khắc phục lỗi màn hình trắng khi dùng localtunnel:**
+> - **Nhập Tunnel Password:** Lần đầu mở link `*.loca.lt`, hệ thống sẽ yêu cầu nhập mật khẩu bảo vệ. Bạn mở [https://loca.lt/mytunnelpassword](https://loca.lt/mytunnelpassword) trên máy tính đang chạy web để lấy dãy số IP của bạn, dán vào ô rồi bấm **Click to Submit** là web sẽ tải.
+> - **Đảm bảo không bị kẹt file dev:** Cần chạy `npm run build` và đảm bảo thư mục dự án không còn file `public/hot`.
+
+#### Lựa chọn B: Dùng `ngrok` (Khuyên dùng: Ổn định cao, tốc độ nhanh, không bị chặn)
+
+1. Cài đặt ngrok nhanh qua PowerShell: `winget install ngrok` (hoặc tải tại [ngrok.com](https://ngrok.com/)).
+2. Chạy lệnh:
+   ```powershell
+   ngrok http 8000
+   ```
+3. Copy đường link dạng `https://xxxx.ngrok-free.app` gửi cho thiết bị ở xa truy cập trực tiếp.
+
+---
+
+### Cách 2: Thiết bị trong cùng mạng Wi-Fi (Mạng nội bộ LAN)
+
+Dành cho điện thoại hoặc laptop khác kết nối chung một mạng Wi-Fi với máy tính của bạn:
+
+1. **Lấy địa chỉ IP máy tính:**
+   - Mở Terminal (PowerShell / CMD), gõ lệnh:
+     ```powershell
+     ipconfig
+     ```
+   - Tìm dòng **IPv4 Address** (Ví dụ: `192.168.1.15`).
+2. **Khởi chạy Laravel mở cho toàn mạng:**
+   ```powershell
+   php artisan serve --host 0.0.0.0 --port 8000
+   ```
+3. **Mở trên điện thoại / thiết bị khác:**
+   - Mở trình duyệt trên điện thoại và truy cập:
+     ```text
+     http://192.168.1.15:8000
+     ```
+     *(Thay `192.168.1.15` bằng địa chỉ IP máy tính của bạn tìm được ở Bước 1).*
 
 ---
 

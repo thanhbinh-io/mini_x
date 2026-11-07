@@ -190,14 +190,14 @@ const submitReply = () => {
 </script>
 
 <template>
-    <Head :title="`${tweet.user?.name || 'User'} on Twitter: &quot;${tweet.tweet?.substring(0, 30) || 'Post'}&quot;`" />
+    <Head :title="`${tweet.user?.name || 'User'} on MiniX: &quot;${tweet.tweet?.substring(0, 30) || 'Post'}&quot;`" />
 
     <TwitterLayout>
-        <div class="text-white min-h-screen">
+        <div class="text-gray-900 dark:text-white min-h-screen bg-white dark:bg-black transition-colors duration-200">
             <!-- Header bar with Back button -->
-            <div class="sticky top-0 bg-black/80 backdrop-blur-md z-20 flex items-center px-4 py-3 border-b border-gray-800 space-x-6">
-                <Link href="/" class="p-2 rounded-full hover:bg-gray-800 transition cursor-pointer">
-                    <ArrowLeft fillColor="#ffffff" :size="20" />
+            <div class="sticky top-0 bg-white/80 dark:bg-black/80 backdrop-blur-md z-20 flex items-center px-4 py-3 border-b border-gray-200 dark:border-gray-800 space-x-6">
+                <Link href="/" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white transition cursor-pointer">
+                    <ArrowLeft fillColor="currentColor" :size="20" />
                 </Link>
                 <div>
                     <h1 class="text-xl font-bold">Post</h1>
@@ -205,17 +205,17 @@ const submitReply = () => {
             </div>
 
             <!-- Main Tweet Content Area -->
-            <article class="p-4 border-b border-gray-800">
+            <article class="p-4 border-b border-gray-200 dark:border-gray-800">
                 <!-- Author Header -->
                 <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center space-x-3">
                         <img
                             :src="tweet.user?.avatar_url || 'https://ui-avatars.com/api/?name=User'"
-                            class="rounded-full w-12 h-12 object-cover bg-gray-700"
+                            class="rounded-full w-12 h-12 object-cover bg-gray-200 dark:bg-gray-700"
                             :alt="tweet.user?.name"
                         />
                         <div>
-                            <div class="font-bold text-white hover:underline cursor-pointer leading-tight">
+                            <div class="font-bold text-gray-900 dark:text-white hover:underline cursor-pointer leading-tight">
                                 {{ tweet.user?.name }}
                             </div>
                             <div class="text-sm text-gray-500">
@@ -230,7 +230,7 @@ const submitReply = () => {
                             as="button"
                             method="delete"
                             :href="route('tweets.destroy', { tweet: tweet.id })"
-                            class="p-2 rounded-full hover:bg-red-950/40 text-red-500 hover:text-red-400 transition cursor-pointer"
+                            class="p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-950/40 text-red-500 hover:text-red-400 transition cursor-pointer"
                             title="Delete post"
                         >
                             <TrashCanOutline :size="20" />
@@ -239,12 +239,12 @@ const submitReply = () => {
                 </div>
 
                 <!-- Tweet Text -->
-                <div class="text-white text-[19px] leading-relaxed break-words whitespace-pre-line my-3">
+                <div class="text-gray-900 dark:text-white text-[19px] leading-relaxed break-words whitespace-pre-line my-3">
                     {{ tweet.tweet }}
                 </div>
 
                 <!-- Attached Media -->
-                <div v-if="tweet.file" class="my-3 rounded-2xl overflow-hidden border border-gray-800 max-h-[500px]">
+                <div v-if="tweet.file" class="my-3 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 max-h-[500px]">
                     <video
                         v-if="tweet.is_video"
                         controls
@@ -262,7 +262,7 @@ const submitReply = () => {
                 <!-- Quoted Tweet Preview Card if exists -->
                 <div
                     v-if="tweet.quote_of"
-                    class="my-3 border border-gray-700 rounded-2xl p-3.5 hover:bg-gray-900/50 transition cursor-pointer"
+                    class="my-3 border border-gray-200 dark:border-gray-700 rounded-2xl p-3.5 hover:bg-gray-50 dark:hover:bg-gray-900/50 transition cursor-pointer"
                     @click="router.visit(`/${tweet.quote_of.user?.username}/status/${tweet.quote_of.id}`)"
                 >
                     <div class="flex items-center space-x-2 mb-1.5">
@@ -270,35 +270,35 @@ const submitReply = () => {
                             :src="tweet.quote_of.user?.avatar_url"
                             class="rounded-full w-5 h-5 object-cover"
                         />
-                        <span class="font-bold text-sm text-white">{{ tweet.quote_of.user?.name }}</span>
+                        <span class="font-bold text-sm text-gray-900 dark:text-white">{{ tweet.quote_of.user?.name }}</span>
                         <span class="text-xs text-gray-500">@{{ tweet.quote_of.user?.username }}</span>
                     </div>
-                    <p class="text-sm text-gray-200 line-clamp-3">{{ tweet.quote_of.tweet }}</p>
+                    <p class="text-sm text-gray-800 dark:text-gray-200 line-clamp-3">{{ tweet.quote_of.tweet }}</p>
                 </div>
 
                 <!-- Timestamp & View Count -->
-                <div class="py-3 text-[14px] text-gray-500 border-b border-gray-800 flex items-center space-x-2">
+                <div class="py-3 text-[14px] text-gray-500 border-b border-gray-200 dark:border-gray-800 flex items-center space-x-2">
                     <span>{{ tweet.created_at_human }}</span>
                     <span>·</span>
-                    <span class="font-bold text-white">{{ viewsCount }}</span>
+                    <span class="font-bold text-gray-900 dark:text-white">{{ viewsCount }}</span>
                     <span>Views</span>
                 </div>
 
                 <!-- Counts Breakdown Row -->
-                <div class="py-3 border-b border-gray-800 flex items-center space-x-6 text-sm text-gray-500">
-                    <div><strong class="text-white">{{ retweetsCount }}</strong> Reposts</div>
-                    <div><strong class="text-white">{{ repliesCount }}</strong> Replies</div>
-                    <div><strong class="text-white">{{ likesCount }}</strong> Likes</div>
-                    <div><strong class="text-white">{{ bookmarksCount }}</strong> Bookmarks</div>
+                <div class="py-3 border-b border-gray-200 dark:border-gray-800 flex items-center space-x-6 text-sm text-gray-500">
+                    <div><strong class="text-gray-900 dark:text-white">{{ retweetsCount }}</strong> Reposts</div>
+                    <div><strong class="text-gray-900 dark:text-white">{{ repliesCount }}</strong> Replies</div>
+                    <div><strong class="text-gray-900 dark:text-white">{{ likesCount }}</strong> Likes</div>
+                    <div><strong class="text-gray-900 dark:text-white">{{ bookmarksCount }}</strong> Bookmarks</div>
                 </div>
 
                 <!-- Interactive Action Buttons Bar -->
-                <div class="flex items-center justify-around py-2 border-b border-gray-800 text-gray-500">
+                <div class="flex items-center justify-around py-2 border-b border-gray-200 dark:border-gray-800 text-gray-500">
                     <!-- Reply Action -->
                     <button
                         type="button"
                         @click="focusReply"
-                        class="p-2.5 rounded-full hover:bg-blue-900/30 hover:text-[#1C9CEF] transition cursor-pointer"
+                        class="p-2.5 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-[#1C9CEF] transition cursor-pointer"
                         title="Reply"
                     >
                         <MessageOutline :size="20" />
@@ -309,7 +309,7 @@ const submitReply = () => {
                         type="button"
                         @click="toggleRetweet"
                         :class="isRetweeted ? 'text-green-500' : 'hover:text-green-500'"
-                        class="p-2.5 rounded-full hover:bg-green-900/30 transition cursor-pointer"
+                        class="p-2.5 rounded-full hover:bg-green-100 dark:hover:bg-green-900/30 transition cursor-pointer"
                         title="Repost"
                     >
                         <Sync :size="20" />
@@ -320,7 +320,7 @@ const submitReply = () => {
                         type="button"
                         @click="toggleLike"
                         :class="isLiked ? 'text-[#F91880]' : 'hover:text-[#F91880]'"
-                        class="p-2.5 rounded-full hover:bg-pink-900/30 transition cursor-pointer"
+                        class="p-2.5 rounded-full hover:bg-pink-100 dark:hover:bg-pink-900/30 transition cursor-pointer"
                         title="Like"
                     >
                         <Heart v-if="isLiked" fillColor="#F91880" :size="20" />
@@ -332,7 +332,7 @@ const submitReply = () => {
                         type="button"
                         @click="toggleBookmark"
                         :class="isBookmarked ? 'text-[#1C9CEF]' : 'hover:text-[#1C9CEF]'"
-                        class="p-2.5 rounded-full hover:bg-blue-900/30 transition cursor-pointer"
+                        class="p-2.5 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 transition cursor-pointer"
                         title="Bookmark"
                     >
                         <Bookmark v-if="isBookmarked" fillColor="#1C9CEF" :size="20" />
@@ -343,7 +343,7 @@ const submitReply = () => {
                     <button
                         type="button"
                         @click="copyShareLink"
-                        class="p-2.5 rounded-full hover:bg-blue-900/30 hover:text-[#1C9CEF] transition cursor-pointer"
+                        class="p-2.5 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-[#1C9CEF] transition cursor-pointer"
                         title="Share"
                     >
                         <ShareVariantOutline :size="20" />
@@ -354,7 +354,7 @@ const submitReply = () => {
                 <div v-if="currentUser" class="pt-4 flex items-start space-x-3">
                     <img
                         :src="currentUser.avatar_url"
-                        class="rounded-full w-10 h-10 object-cover bg-gray-700"
+                        class="rounded-full w-10 h-10 object-cover bg-gray-200 dark:bg-gray-700"
                         :alt="currentUser.name"
                     />
                     <div class="flex-1">
@@ -366,11 +366,11 @@ const submitReply = () => {
                             v-model="replyText"
                             placeholder="Post your reply"
                             rows="2"
-                            class="w-full bg-black border-0 text-white placeholder-gray-500 focus:ring-0 resize-none text-[17px] p-0"
+                            class="w-full bg-transparent border-0 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 resize-none text-[17px] p-0"
                         ></textarea>
 
                         <!-- Attached file preview in reply -->
-                        <div v-if="replyPreview" class="relative my-2 rounded-xl overflow-hidden border border-gray-800 max-h-48">
+                        <div v-if="replyPreview" class="relative my-2 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 max-h-48">
                             <button
                                 type="button"
                                 @click="clearReplyFile"
@@ -384,9 +384,9 @@ const submitReply = () => {
 
                         <div v-if="replyError" class="text-red-400 text-xs py-1">{{ replyError }}</div>
 
-                        <div class="flex items-center justify-between pt-2 border-t border-gray-800 mt-2">
+                        <div class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-800 mt-2">
                             <div>
-                                <label for="replyMediaUpload" class="hover:bg-blue-900/30 p-2 rounded-full cursor-pointer text-[#1C9CEF] inline-block transition">
+                                <label for="replyMediaUpload" class="hover:bg-blue-100 dark:hover:bg-blue-900/30 p-2 rounded-full cursor-pointer text-[#1C9CEF] inline-block transition">
                                     <ImageOutline fillColor="#1C9CEF" :size="20" />
                                 </label>
                                 <input type="file" id="replyMediaUpload" class="hidden" accept="image/*,video/mp4" @change="handleReplyFile">
@@ -394,7 +394,7 @@ const submitReply = () => {
 
                             <button
                                 :disabled="(!replyText && !replyFile) || isSubmittingReply"
-                                :class="(!replyText && !replyFile) || isSubmittingReply ? 'bg-white/50 text-black/50 cursor-not-allowed' : 'bg-white hover:bg-gray-200 text-black cursor-pointer'"
+                                :class="(!replyText && !replyFile) || isSubmittingReply ? 'bg-gray-200 dark:bg-white/50 text-gray-400 dark:text-black/50 cursor-not-allowed' : 'bg-gray-900 hover:bg-black text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black cursor-pointer'"
                                 @click="submitReply"
                                 class="font-extrabold text-sm px-4 py-1.5 rounded-full transition shadow"
                             >
@@ -405,7 +405,7 @@ const submitReply = () => {
                     </div>
                 </div>
 
-                <div v-else class="py-4 text-center border-t border-gray-800 mt-3">
+                <div v-else class="py-4 text-center border-t border-gray-200 dark:border-gray-800 mt-3">
                     <p class="text-sm text-gray-500 mb-2">Want to reply?</p>
                     <Link :href="route('login')" class="text-sm font-bold text-[#1C9CEF] hover:underline">
                         Log in or sign up to join the conversation
@@ -414,7 +414,7 @@ const submitReply = () => {
             </article>
 
             <!-- Replies Thread List -->
-            <div class="divide-y divide-gray-800">
+            <div class="divide-y divide-gray-200 dark:divide-gray-800">
                 <div v-if="replies && replies.length > 0">
                     <div v-for="reply in replies" :key="reply.id">
                         <Tweet :tweet="reply" />

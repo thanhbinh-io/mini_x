@@ -40,4 +40,23 @@ class NotificationController extends Controller
 
         return back()->with('success', 'Đã đánh dấu tất cả thông báo là đã đọc.');
     }
+
+    /**
+     * Get real-time unread counts for notifications and messages.
+     */
+    public function unreadCounts(Request $request)
+    {
+        $user = $request->user();
+        if (! $user) {
+            return response()->json([
+                'unread_notifications' => 0,
+                'unread_messages' => 0,
+            ]);
+        }
+
+        return response()->json([
+            'unread_notifications' => $user->unreadNotifications()->count(),
+            'unread_messages' => \App\Models\Message::where('receiver_id', $user->id)->where('is_read', false)->count(),
+        ]);
+    }
 }

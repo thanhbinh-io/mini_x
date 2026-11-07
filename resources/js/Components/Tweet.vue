@@ -638,10 +638,10 @@ onUnmounted(() => {
                         :src="tweet.quote_of.user?.avatar_url || 'https://ui-avatars.com/api/?name=User'"
                         class="rounded-full w-5 h-5 object-cover"
                     />
-                    <span class="font-bold text-sm text-white">{{ tweet.quote_of.user?.name }}</span>
+                    <span class="font-bold text-sm text-gray-900 dark:text-white">{{ tweet.quote_of.user?.name }}</span>
                     <span class="text-xs text-gray-500">@{{ tweet.quote_of.user?.username }}</span>
                 </div>
-                <div class="text-sm text-gray-200 line-clamp-3">{{ tweet.quote_of.tweet }}</div>
+                <div class="text-sm text-gray-800 dark:text-gray-200 line-clamp-3">{{ tweet.quote_of.tweet }}</div>
                 <div v-if="tweet.quote_of.file" class="mt-2 rounded-xl overflow-hidden max-h-40">
                     <img v-if="!tweet.quote_of.is_video" :src="tweet.quote_of.file" class="w-full object-cover max-h-40" />
                 </div>
@@ -807,13 +807,13 @@ onUnmounted(() => {
         >
             <div
                 @click.stop
-                class="w-full max-w-lg mt-14 bg-black border border-gray-800 rounded-2xl p-4 shadow-2xl"
+                class="w-full max-w-lg mt-14 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-4 shadow-2xl text-gray-900 dark:text-white transition-colors"
             >
-                <div class="flex items-center justify-between pb-3 border-b border-gray-800">
+                <div class="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-800">
                     <button
                         type="button"
                         @click="showReplyModal = false"
-                        class="p-1.5 rounded-full hover:bg-gray-800 text-gray-400 hover:text-white"
+                        class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer"
                     >
                         <Close :size="20" />
                     </button>
@@ -821,7 +821,7 @@ onUnmounted(() => {
                         :disabled="(!replyText && !replyFile) || isSubmittingReply"
                         :class="(!replyText && !replyFile) || isSubmittingReply ? 'bg-[#124D77] text-gray-400 cursor-not-allowed' : 'bg-[#1C9CEF] hover:bg-[#1A8CD8] text-white cursor-pointer'"
                         @click="submitReply"
-                        class="font-bold text-sm px-5 py-1.5 rounded-full transition"
+                        class="font-bold text-sm px-5 py-1.5 rounded-full transition shadow"
                     >
                         <span v-if="isSubmittingReply">Replying...</span>
                         <span v-else>Reply</span>
@@ -830,13 +830,13 @@ onUnmounted(() => {
 
                 <!-- Original Tweet in Reply Modal -->
                 <div class="flex pt-3 pb-2 text-sm">
-                    <img :src="tweet.user?.avatar_url" class="rounded-full w-9 h-9 object-cover mr-3" />
+                    <img :src="tweet.user?.avatar_url" class="rounded-full w-9 h-9 object-cover mr-3 bg-gray-200 dark:bg-gray-700" />
                     <div class="flex-1">
                         <div class="flex items-center space-x-1.5">
-                            <span class="font-bold text-white">{{ tweet.user?.name }}</span>
+                            <span class="font-bold text-gray-900 dark:text-white">{{ tweet.user?.name }}</span>
                             <span class="text-xs text-gray-500">@{{ tweet.user?.username }}</span>
                         </div>
-                        <div class="text-gray-300 line-clamp-3 mt-1">{{ tweet.tweet }}</div>
+                        <div class="text-gray-700 dark:text-gray-300 line-clamp-3 mt-1">{{ tweet.tweet }}</div>
                         <div class="text-xs text-gray-500 mt-2">
                             Replying to <span class="text-[#1C9CEF]">@{{ tweet.user?.username }}</span>
                         </div>
@@ -844,17 +844,17 @@ onUnmounted(() => {
                 </div>
 
                 <!-- Current User Reply Input -->
-                <div class="flex pt-3 border-t border-gray-800/80">
-                    <img :src="currentUser?.avatar_url" class="rounded-full w-9 h-9 object-cover mr-3" />
+                <div class="flex pt-3 border-t border-gray-200 dark:border-gray-800/80">
+                    <img :src="currentUser?.avatar_url" class="rounded-full w-9 h-9 object-cover mr-3 bg-gray-200 dark:bg-gray-700" />
                     <div class="flex-1">
                         <textarea
                             v-model="replyText"
                             placeholder="Post your reply"
                             rows="3"
-                            class="w-full bg-black border-0 text-white placeholder-gray-500 focus:ring-0 resize-none text-[16px] p-0"
+                            class="w-full bg-transparent border-0 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 resize-none text-[16px] p-0"
                         ></textarea>
 
-                        <div v-if="replyPreview" class="relative my-2 rounded-xl overflow-hidden border border-gray-800 max-h-40">
+                        <div v-if="replyPreview" class="relative my-2 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 max-h-40">
                             <button
                                 type="button"
                                 @click="replyFile = null; replyPreview = '';"
@@ -865,7 +865,7 @@ onUnmounted(() => {
                             <img :src="replyPreview" class="w-full max-h-40 object-cover" />
                         </div>
 
-                        <div class="flex items-center justify-between pt-2 border-t border-gray-800">
+                        <div class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-800">
                             <label for="replyModalFile" class="hover:bg-blue-900/30 p-2 rounded-full cursor-pointer text-[#1C9CEF]">
                                 <ImageOutline fillColor="#1C9CEF" :size="20" />
                             </label>
@@ -886,13 +886,13 @@ onUnmounted(() => {
         >
             <div
                 @click.stop
-                class="w-full max-w-lg mt-14 bg-black border border-gray-800 rounded-2xl p-4 shadow-2xl"
+                class="w-full max-w-lg mt-14 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-4 shadow-2xl text-gray-900 dark:text-white transition-colors"
             >
-                <div class="flex items-center justify-between pb-3 border-b border-gray-800">
+                <div class="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-800">
                     <button
                         type="button"
                         @click="showQuoteModal = false"
-                        class="p-1.5 rounded-full hover:bg-gray-800 text-gray-400 hover:text-white"
+                        class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer"
                     >
                         <Close :size="20" />
                     </button>
@@ -900,7 +900,7 @@ onUnmounted(() => {
                         :disabled="(!quoteText && !quoteFile) || isSubmittingQuote"
                         :class="(!quoteText && !quoteFile) || isSubmittingQuote ? 'bg-[#124D77] text-gray-400 cursor-not-allowed' : 'bg-[#1C9CEF] hover:bg-[#1A8CD8] text-white cursor-pointer'"
                         @click="submitQuote"
-                        class="font-bold text-sm px-5 py-1.5 rounded-full transition"
+                        class="font-bold text-sm px-5 py-1.5 rounded-full transition shadow"
                     >
                         <span v-if="isSubmittingQuote">Posting...</span>
                         <span v-else>Quote</span>
@@ -909,17 +909,17 @@ onUnmounted(() => {
 
                 <!-- Current User Input -->
                 <div class="flex pt-3">
-                    <img :src="currentUser?.avatar_url" class="rounded-full w-9 h-9 object-cover mr-3" />
+                    <img :src="currentUser?.avatar_url" class="rounded-full w-9 h-9 object-cover mr-3 bg-gray-200 dark:bg-gray-700" />
                     <div class="flex-1">
                         <textarea
                             v-model="quoteText"
                             placeholder="Add a comment"
                             rows="3"
-                            class="w-full bg-black border-0 text-white placeholder-gray-500 focus:ring-0 resize-none text-[16px] p-0"
+                            class="w-full bg-transparent border-0 text-gray-900 dark:text-white placeholder-gray-500 focus:ring-0 resize-none text-[16px] p-0"
                         ></textarea>
 
                         <!-- Attached file preview -->
-                        <div v-if="quotePreview" class="relative my-2 rounded-xl overflow-hidden border border-gray-800 max-h-40">
+                        <div v-if="quotePreview" class="relative my-2 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 max-h-40">
                             <button
                                 type="button"
                                 @click="quoteFile = null; quotePreview = '';"
@@ -931,16 +931,16 @@ onUnmounted(() => {
                         </div>
 
                         <!-- Quoted Tweet Card Box -->
-                        <div class="my-3 border border-gray-800 rounded-2xl p-3 bg-[#0d0d0d]">
+                        <div class="my-3 border border-gray-200 dark:border-gray-800 rounded-2xl p-3 bg-gray-50 dark:bg-[#0d0d0d]">
                             <div class="flex items-center space-x-1.5 mb-1">
                                 <img :src="tweet.user?.avatar_url" class="rounded-full w-4 h-4 object-cover" />
-                                <span class="font-bold text-xs text-white">{{ tweet.user?.name }}</span>
+                                <span class="font-bold text-xs text-gray-900 dark:text-white">{{ tweet.user?.name }}</span>
                                 <span class="text-xs text-gray-500">@{{ tweet.user?.username }}</span>
                             </div>
-                            <div class="text-xs text-gray-300 line-clamp-3">{{ tweet.tweet }}</div>
+                            <div class="text-xs text-gray-700 dark:text-gray-300 line-clamp-3">{{ tweet.tweet }}</div>
                         </div>
 
-                        <div class="flex items-center justify-between pt-2 border-t border-gray-800">
+                        <div class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-800">
                             <label for="quoteModalFile" class="hover:bg-blue-900/30 p-2 rounded-full cursor-pointer text-[#1C9CEF]">
                                 <ImageOutline fillColor="#1C9CEF" :size="20" />
                             </label>

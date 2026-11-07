@@ -30,5 +30,22 @@ class AppServiceProvider extends ServiceProvider
                 ->mixedCase()
                 ->symbols();
         });
+
+        // Tạo link đặt lại mật khẩu với host & port chính xác từ trình duyệt đang sử dụng
+        \Illuminate\Auth\Notifications\ResetPassword::createUrlUsing(function ($notifiable, string $token) {
+            $request = request();
+            $baseUrl = config('app.url');
+
+            if ($request && $request->getHttpHost()) {
+                $scheme = $request->getScheme();
+                $httpHost = $request->getHttpHost();
+                $baseUrl = "{$scheme}://{$httpHost}";
+            }
+
+            return rtrim($baseUrl, '/') . route('password.reset', [
+                'token' => $token,
+                'email' => $notifiable->getEmailForPasswordReset(),
+            ], false);
+        });
     }
 }

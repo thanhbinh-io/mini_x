@@ -37,9 +37,8 @@ class TweetController extends Controller
         if ($tab === 'following') {
             if ($user) {
                 $followingIds = $user->following()->pluck('following_id');
-                // Display posts from followed accounts plus author's own posts
-                $feedUserIds = $followingIds->push($user->id)->unique();
-                $query->whereIn('user_id', $feedUserIds);
+                // Only display posts from followed accounts (exclude author's own posts)
+                $query->whereIn('user_id', $followingIds);
             } else {
                 // Guests see an empty following feed
                 $query->whereRaw('1 = 0');

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -55,15 +57,26 @@ class NewPasswordController extends Controller
             }
         );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
+        // Đặt lại mật khẩu thành công -> Tự động đăng nhập và chuyển hướng thẳng vào Trang chủ
         if ($status == Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', __($status));
+            $user = User::where('email', $request->email)->first();
+            if ($user) {
+                Auth::login($user);
+                $request->session()->regenerate();
+            }
+
+            return redirect()->route('tweets.index')->with('success', 'Mật khẩu đã được đặt lại thành công!');
+        }
+
+        $errorMsg = trans($status);
+        if ($status === Password::INVALID_TOKEN) {
+            $errorMsg = 'Liên kết đặt lại mật khẩu đã hết hạn hoặc không hợp lệ. Vui lòng yêu cầu lại.';
+        } elseif ($status === Password::INVALID_USER) {
+            $errorMsg = 'Không tìm thấy tài khoản với email này.';
         }
 
         throw ValidationException::withMessages([
-            'email' => [trans($status)],
+            'email' => [$errorMsg],
         ]);
     }
 }

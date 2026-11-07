@@ -17,12 +17,6 @@ const allMenuItems = [
         isExternal: false,
     },
     {
-        title: 'Monetization',
-        route: 'creator_studio',
-        url: '/creator-studio',
-        isExternal: false,
-    },
-    {
         title: 'Premium',
         route: null,
         url: null,

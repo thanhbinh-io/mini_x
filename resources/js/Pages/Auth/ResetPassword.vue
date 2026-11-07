@@ -9,7 +9,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 const props = defineProps({
     email: {
         type: String,
-        required: true,
+        default: '',
     },
     token: {
         type: String,
@@ -19,7 +19,7 @@ const props = defineProps({
 
 const form = useForm({
     token: props.token,
-    email: props.email,
+    email: props.email || '',
     password: '',
     password_confirmation: '',
 });
@@ -33,12 +33,23 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Reset Password" />
+        <Head title="Đặt lại mật khẩu - MiniX" />
 
-        <form @submit.prevent="submit">
-            <div>
+        <div class="mb-6">
+            <h1 class="text-2xl font-black text-white">Đặt lại mật khẩu mới</h1>
+            <p class="text-sm text-gray-400 mt-1">
+                Nhập mật khẩu mới để đăng nhập và bảo vệ tài khoản MiniX của bạn.
+            </p>
+        </div>
+
+        <form @submit.prevent="submit" class="space-y-4">
+            <!-- Email (hiển thị cố định nếu đã có từ link, hoặc cho nhập nếu thiếu) -->
+            <div v-if="props.email" class="p-3 bg-gray-900/60 border border-gray-800 rounded-xl">
+                <div class="text-xs text-gray-500">Tài khoản đặt lại mật khẩu</div>
+                <div class="text-sm font-semibold text-white break-all mt-0.5">{{ form.email }}</div>
+            </div>
+            <div v-else>
                 <InputLabel for="email" value="Email" />
-
                 <TextInput
                     id="email"
                     type="email"
@@ -47,14 +58,14 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="username"
+                    placeholder="email@example.com"
                 />
-
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
+            <!-- Password -->
+            <div>
+                <InputLabel for="password" value="Mật khẩu mới" />
                 <TextInput
                     id="password"
                     type="password"
@@ -62,17 +73,20 @@ const submit = () => {
                     v-model="form.password"
                     required
                     autocomplete="new-password"
+                    placeholder="8 - 16 ký tự, gồm chữ hoa, thường & ký tự đặc biệt"
                 />
-
+                <p class="text-xs text-gray-500 mt-1">
+                    Yêu cầu: 8 - 16 ký tự, có ít nhất 1 chữ hoa, 1 chữ thường và 1 ký tự đặc biệt (@, #, $, ...)
+                </p>
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="mt-4">
+            <!-- Password confirmation -->
+            <div>
                 <InputLabel
                     for="password_confirmation"
-                    value="Confirm Password"
+                    value="Xác nhận mật khẩu mới"
                 />
-
                 <TextInput
                     id="password_confirmation"
                     type="password"
@@ -80,20 +94,23 @@ const submit = () => {
                     v-model="form.password_confirmation"
                     required
                     autocomplete="new-password"
+                    placeholder="Nhập lại mật khẩu mới"
                 />
-
                 <InputError
                     class="mt-2"
                     :message="form.errors.password_confirmation"
                 />
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
+            <!-- Button submit -->
+            <div class="pt-2">
                 <PrimaryButton
-                    :class="{ 'opacity-25': form.processing }"
+                    class="w-full justify-center bg-[#1C9CEF] hover:bg-[#1A8CD8] text-white font-bold py-3 rounded-full text-sm transition shadow-lg cursor-pointer"
+                    :class="{ 'opacity-25 cursor-not-allowed': form.processing }"
                     :disabled="form.processing"
                 >
-                    Reset Password
+                    <span v-if="form.processing">Đang cập nhật...</span>
+                    <span v-else>Xác nhận và vào trang chủ</span>
                 </PrimaryButton>
             </div>
         </form>

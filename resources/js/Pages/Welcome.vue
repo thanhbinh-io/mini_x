@@ -116,7 +116,7 @@ const loadMore = () => {
 </script>
 
 <template>
-    <Head title="Home / Twitter" />
+    <Head title="MiniX" />
 
     <TwitterLayout :showHomeHeader="true" :currentTab="currentTab">
         <div class="text-gray-900 dark:text-white divide-y divide-gray-200 dark:divide-gray-800">
@@ -207,7 +207,7 @@ const loadMore = () => {
             <div v-else class="p-6 bg-gray-50 dark:bg-black border-b border-gray-200 dark:border-gray-800 text-center">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Don't miss what's happening</h3>
                 <p class="text-sm text-gray-500 mb-4 max-w-md mx-auto">
-                    People on Twitter are the first to know. Log in or sign up to join the conversation and customize your timeline.
+                    People on MiniX are the first to know. Log in or sign up to join the conversation and customize your timeline.
                 </p>
                 <div class="flex justify-center space-x-3">
                     <Link
@@ -228,7 +228,7 @@ const loadMore = () => {
             <!-- Empty Feed State -->
             <div v-if="!tweetList || tweetList.length === 0" class="py-20 px-6 text-center max-w-sm mx-auto">
                 <div class="text-xl font-bold text-gray-300 mb-2">
-                    {{ currentTab === 'following' ? 'Welcome to your timeline!' : 'Welcome to your Twitter feed!' }}
+                    {{ currentTab === 'following' ? 'Welcome to your timeline!' : 'Welcome to your MiniX feed!' }}
                 </div>
                 <p class="text-sm text-gray-500 leading-relaxed">
                     {{

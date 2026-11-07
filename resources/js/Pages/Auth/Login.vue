@@ -30,7 +30,7 @@ const submit = () => {
         <Head title="Log in" />
 
         <div class="mb-6">
-            <h1 class="text-2xl font-black text-white">Sign in to Twitter</h1>
+            <h1 class="text-2xl font-black text-white">Sign in to MiniX</h1>
             <p class="text-sm text-gray-400 mt-1">Welcome back!</p>
         </div>
 

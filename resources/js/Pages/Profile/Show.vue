@@ -169,17 +169,17 @@ const submitUserReport = () => {
 </script>
 
 <template>
-    <Head :title="`${profileUser.name} (@${profileUser.username}) / Twitter`" />
+    <Head :title="`${profileUser.name} (@${profileUser.username})`" />
 
     <TwitterLayout>
-        <div class="text-white min-h-screen border-b border-gray-800">
+        <div class="text-gray-900 dark:text-white min-h-screen border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black transition-colors duration-200">
             <!-- Header bar with Back button and post count -->
-            <div class="sticky top-0 bg-black/80 backdrop-blur-md z-20 flex items-center px-4 py-2 border-b border-gray-800 space-x-6">
-                <Link href="/" class="p-2 rounded-full hover:bg-gray-800 transition cursor-pointer">
-                    <ArrowLeft fillColor="#ffffff" :size="20" />
+            <div class="sticky top-0 bg-white/80 dark:bg-black/80 backdrop-blur-md z-20 flex items-center px-4 py-2 border-b border-gray-200 dark:border-gray-800 space-x-6">
+                <Link href="/" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white transition cursor-pointer">
+                    <ArrowLeft fillColor="currentColor" :size="20" />
                 </Link>
                 <div>
-                    <h1 class="text-xl font-bold leading-tight flex items-center">
+                    <h1 class="text-xl font-bold leading-tight flex items-center text-gray-900 dark:text-white">
                         {{ profileUser.name }}
                     </h1>
                     <p class="text-xs text-gray-500">
@@ -189,7 +189,7 @@ const submitUserReport = () => {
             </div>
 
             <!-- Banner Header -->
-            <div class="relative h-48 bg-gray-900 overflow-hidden">
+            <div class="relative h-48 bg-gray-100 dark:bg-gray-900 overflow-hidden">
                 <img
                     :src="profileUser.banner_url"
                     class="w-full h-full object-cover"
@@ -198,11 +198,11 @@ const submitUserReport = () => {
             </div>
 
             <!-- Profile Info Area -->
-            <div class="px-4 pb-4 border-b border-gray-800">
+            <div class="px-4 pb-4 border-b border-gray-200 dark:border-gray-800">
                 <!-- Avatar & Action Buttons Row -->
                 <div class="relative flex justify-between items-end -mt-16 mb-3">
                     <!-- Big Avatar with border -->
-                    <div class="rounded-full ring-4 ring-black overflow-hidden w-32 h-32 bg-gray-800">
+                    <div class="rounded-full ring-4 ring-white dark:ring-black overflow-hidden w-32 h-32 bg-gray-100 dark:bg-gray-800">
                         <img
                             :src="profileUser.avatar_url"
                             class="w-full h-full object-cover"
@@ -217,7 +217,7 @@ const submitUserReport = () => {
                             v-if="isOwner"
                             @click="isEditModalOpen = true"
                             type="button"
-                            class="border border-gray-600 hover:bg-gray-900 text-white font-bold text-sm px-4 py-1.5 rounded-full transition cursor-pointer"
+                            class="border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-900 dark:text-white font-bold text-sm px-4 py-1.5 rounded-full transition cursor-pointer"
                         >
                             Edit profile
                         </button>
@@ -229,19 +229,19 @@ const submitUserReport = () => {
                                 <button
                                     type="button"
                                     @click="showOptionsMenu = !showOptionsMenu"
-                                    class="border border-gray-600 hover:bg-gray-900 p-1.5 rounded-full text-white cursor-pointer transition"
+                                    class="border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900 p-1.5 rounded-full text-gray-900 dark:text-white cursor-pointer transition"
                                 >
                                     <DotsHorizontal :size="18" />
                                 </button>
 
                                 <div
                                     v-if="showOptionsMenu"
-                                    class="absolute right-0 mt-2 w-48 bg-black border border-gray-700 rounded-xl shadow-2xl py-1 z-30"
+                                    class="absolute right-0 mt-2 w-48 bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl py-1 z-30"
                                 >
                                     <button
                                         type="button"
                                         @click="toggleMute"
-                                        class="w-full flex items-center px-4 py-2.5 hover:bg-gray-900 text-gray-200 text-sm font-semibold cursor-pointer"
+                                        class="w-full flex items-center px-4 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-800 dark:text-gray-200 text-sm font-semibold cursor-pointer"
                                     >
                                         <VolumeMute class="mr-2" :size="18" />
                                         <span>{{ localIsMuted ? `Unmute @${profileUser.username}` : `Mute @${profileUser.username}` }}</span>
@@ -249,7 +249,7 @@ const submitUserReport = () => {
                                     <button
                                         type="button"
                                         @click="toggleBlock"
-                                        class="w-full flex items-center px-4 py-2.5 hover:bg-gray-900 text-red-500 text-sm font-semibold cursor-pointer"
+                                        class="w-full flex items-center px-4 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-900 text-red-500 text-sm font-semibold cursor-pointer"
                                     >
                                         <AccountCancelOutline class="mr-2" :size="18" />
                                         <span>{{ localIsBlocked ? `Unblock @${profileUser.username}` : `Block @${profileUser.username}` }}</span>
@@ -259,7 +259,7 @@ const submitUserReport = () => {
                                     <button
                                         type="button"
                                         @click="openReportUser"
-                                        class="w-full flex items-center px-4 py-2.5 hover:bg-gray-900 text-yellow-500 text-sm font-semibold cursor-pointer border-t border-gray-800"
+                                        class="w-full flex items-center px-4 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-900 text-yellow-600 dark:text-yellow-500 text-sm font-semibold cursor-pointer border-t border-gray-200 dark:border-gray-800"
                                     >
                                         <FlagOutline class="mr-2" fillColor="#EAB308" :size="18" />
                                         <span>Báo cáo @{{ profileUser.username }}</span>
@@ -271,7 +271,7 @@ const submitUserReport = () => {
                             <Link
                                 v-if="!localIsBlocked && currentUser"
                                 :href="route('messages.index', { contact_id: profileUser.id })"
-                                class="border border-gray-600 hover:bg-gray-900 p-1.5 rounded-full text-white cursor-pointer transition flex items-center justify-center"
+                                class="border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900 p-1.5 rounded-full text-gray-900 dark:text-white cursor-pointer transition flex items-center justify-center"
                                 title="Nhắn tin"
                             >
                                 <ChatOutline :size="18" />
@@ -285,8 +285,8 @@ const submitUserReport = () => {
                                 @mouseenter="isHoveringFollowing = true"
                                 @mouseleave="isHoveringFollowing = false"
                                 :class="localIsFollowing
-                                    ? (isHoveringFollowing ? 'bg-red-950/40 border-red-600 text-red-500' : 'bg-black border-gray-600 text-white')
-                                    : 'bg-white hover:bg-gray-200 text-black border-transparent'"
+                                    ? (isHoveringFollowing ? 'bg-red-50 dark:bg-red-950/40 border-red-500 dark:border-red-600 text-red-600 dark:text-red-500' : 'bg-white dark:bg-black border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white')
+                                    : 'bg-gray-900 hover:bg-black text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black border-transparent shadow-sm'"
                                 class="border font-bold text-sm px-5 py-1.5 rounded-full transition cursor-pointer min-w-[105px]"
                             >
                                 <span v-if="localIsFollowing">{{ isHoveringFollowing ? 'Unfollow' : 'Following' }}</span>
@@ -302,13 +302,13 @@ const submitUserReport = () => {
                 </div>
 
                 <!-- Blocked By Alert -->
-                <div v-else-if="isBlockedBy" class="bg-gray-900 border border-gray-800 rounded-xl p-3 my-3 text-sm text-gray-400">
+                <div v-else-if="isBlockedBy" class="bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-xl p-3 my-3 text-sm text-gray-700 dark:text-gray-400">
                     @{{ profileUser.username }} has blocked you. You are blocked from following @{{ profileUser.username }} and viewing their posts.
                 </div>
 
                 <!-- Profile details -->
                 <div class="mt-2">
-                    <h2 class="text-xl font-black text-white leading-tight">
+                    <h2 class="text-xl font-black text-gray-900 dark:text-white leading-tight">
                         {{ profileUser.name }}
                     </h2>
                     <p class="text-sm text-gray-500">
@@ -316,7 +316,7 @@ const submitUserReport = () => {
                     </p>
 
                     <!-- Bio -->
-                    <p v-if="profileUser.bio" class="text-[15px] text-gray-200 mt-3 whitespace-pre-line leading-relaxed">
+                    <p v-if="profileUser.bio" class="text-[15px] text-gray-800 dark:text-gray-200 mt-3 whitespace-pre-line leading-relaxed">
                         {{ profileUser.bio }}
                     </p>
 
@@ -344,14 +344,14 @@ const submitUserReport = () => {
                             :href="route('users.following', profileUser.username)"
                             class="hover:underline flex items-center space-x-1"
                         >
-                            <span class="font-bold text-white">{{ profileUser.following_count }}</span>
+                            <span class="font-bold text-gray-900 dark:text-white">{{ profileUser.following_count }}</span>
                             <span class="text-gray-500">Following</span>
                         </Link>
                         <Link
                             :href="route('users.followers', profileUser.username)"
                             class="hover:underline flex items-center space-x-1"
                         >
-                            <span class="font-bold text-white">{{ localFollowersCount }}</span>
+                            <span class="font-bold text-gray-900 dark:text-white">{{ localFollowersCount }}</span>
                             <span class="text-gray-500">Followers</span>
                         </Link>
                     </div>
@@ -359,11 +359,11 @@ const submitUserReport = () => {
             </div>
 
             <!-- Profile Filter Tabs Row -->
-            <div class="flex border-b border-gray-800 text-sm font-bold text-gray-500">
+            <div class="flex border-b border-gray-200 dark:border-gray-800 text-sm font-bold text-gray-500">
                 <button
                     type="button"
                     @click="switchTab('tweets')"
-                    :class="currentTab === 'tweets' ? 'text-white' : 'hover:bg-gray-900/50 hover:text-gray-300'"
+                    :class="currentTab === 'tweets' ? 'text-gray-900 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:text-gray-700 dark:hover:text-gray-300'"
                     class="flex-1 py-3 text-center transition cursor-pointer relative"
                 >
                     <span>Posts</span>
@@ -373,7 +373,7 @@ const submitUserReport = () => {
                 <button
                     type="button"
                     @click="switchTab('replies')"
-                    :class="currentTab === 'replies' ? 'text-white' : 'hover:bg-gray-900/50 hover:text-gray-300'"
+                    :class="currentTab === 'replies' ? 'text-gray-900 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:text-gray-700 dark:hover:text-gray-300'"
                     class="flex-1 py-3 text-center transition cursor-pointer relative"
                 >
                     <span>Replies</span>
@@ -383,7 +383,7 @@ const submitUserReport = () => {
                 <button
                     type="button"
                     @click="switchTab('media')"
-                    :class="currentTab === 'media' ? 'text-white' : 'hover:bg-gray-900/50 hover:text-gray-300'"
+                    :class="currentTab === 'media' ? 'text-gray-900 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:text-gray-700 dark:hover:text-gray-300'"
                     class="flex-1 py-3 text-center transition cursor-pointer relative"
                 >
                     <span>Media</span>
@@ -393,7 +393,7 @@ const submitUserReport = () => {
                 <button
                     type="button"
                     @click="switchTab('likes')"
-                    :class="currentTab === 'likes' ? 'text-white' : 'hover:bg-gray-900/50 hover:text-gray-300'"
+                    :class="currentTab === 'likes' ? 'text-gray-900 dark:text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-900/50 hover:text-gray-700 dark:hover:text-gray-300'"
                     class="flex-1 py-3 text-center transition cursor-pointer relative"
                 >
                     <span>Likes</span>
@@ -402,14 +402,14 @@ const submitUserReport = () => {
             </div>
 
             <!-- Filtered Tweets List -->
-            <div v-if="!localIsBlocked && !isBlockedBy" class="divide-y divide-gray-800">
+            <div v-if="!localIsBlocked && !isBlockedBy" class="divide-y divide-gray-200 dark:divide-gray-800">
                 <div v-if="tweets && tweets.length > 0">
                     <div v-for="tweet in tweets" :key="tweet.id">
                         <Tweet :tweet="tweet" />
                     </div>
                 </div>
                 <div v-else class="py-16 text-center text-gray-500 text-sm max-w-sm mx-auto px-4">
-                    <div class="text-xl font-bold text-gray-300 mb-1">
+                    <div class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-1">
                         {{ currentTab === 'likes' ? 'No likes yet' : currentTab === 'media' ? 'No media yet' : currentTab === 'replies' ? 'No replies yet' : 'No posts yet' }}
                     </div>
                     <p class="text-xs text-gray-500">
@@ -431,19 +431,19 @@ const submitUserReport = () => {
         <Teleport to="body">
             <div
                 v-if="showUserReportModal"
-                class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
                 @click.self="showUserReportModal = false"
             >
-                <div class="bg-gray-950 border border-gray-700 rounded-2xl w-full max-w-sm shadow-2xl">
-                    <div class="px-6 py-5 border-b border-gray-800 flex items-center justify-between">
+                <div class="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-700 rounded-2xl w-full max-w-sm shadow-2xl text-gray-900 dark:text-white">
+                    <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
                         <h3 class="text-base font-bold">🚨 Báo cáo @{{ profileUser.username }}</h3>
-                        <button @click="showUserReportModal = false" class="p-1.5 hover:bg-gray-800 rounded-full text-gray-400">
+                        <button @click="showUserReportModal = false" class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full text-gray-500 dark:text-gray-400">
                             <Close :size="18" />
                         </button>
                     </div>
                     <div class="px-6 py-5 space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">Lý do báo cáo:</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Lý do báo cáo:</label>
                             <div class="space-y-2">
                                 <label
                                     v-for="(label, key) in {
@@ -463,25 +463,25 @@ const submitUserReport = () => {
                                         v-model="reportReason"
                                         class="accent-[#1C9CEF]"
                                     />
-                                    <span class="text-sm text-gray-300 group-hover:text-white transition">{{ label }}</span>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition">{{ label }}</span>
                                 </label>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-400 mb-1">Mô tả thêm (tuỳ chọn):</label>
+                            <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Mô tả thêm (tuỳ chọn):</label>
                             <textarea
                                 v-model="reportDescription"
                                 rows="2"
                                 maxlength="500"
                                 placeholder="Thêm thông tin vi phạm..."
-                                class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#1C9CEF] resize-none"
+                                class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-[#1C9CEF] resize-none"
                             />
                         </div>
                     </div>
-                    <div class="px-6 py-4 border-t border-gray-800 flex justify-end gap-3">
+                    <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-800 flex justify-end gap-3">
                         <button
                             @click="showUserReportModal = false"
-                            class="px-4 py-2 text-sm text-gray-400 hover:text-white border border-gray-700 rounded-full transition"
+                            class="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700 rounded-full transition"
                         >
                             Hủy
                         </button>

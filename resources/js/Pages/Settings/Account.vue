@@ -5,7 +5,7 @@ import SettingsLayout from './SettingsLayout.vue';
 import AccountOutline from 'vue-material-design-icons/AccountOutline.vue';
 import KeyOutline from 'vue-material-design-icons/KeyOutline.vue';
 import DownloadOutline from 'vue-material-design-icons/DownloadOutline.vue';
-import HeartBrokenOutline from 'vue-material-design-icons/HeartBrokenOutline.vue';
+import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue';
 import ChevronRight from 'vue-material-design-icons/ChevronRight.vue';
 import Close from 'vue-material-design-icons/Close.vue';
 import CheckCircle from 'vue-material-design-icons/CheckCircle.vue';
@@ -150,20 +150,20 @@ const downloadArchive = () => {
                 <ChevronRight :size="20" class="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 flex-shrink-0 ml-4" />
             </button>
 
-            <!-- 4. Deactivate your account -->
+            <!-- 4. Delete your account permanently -->
             <button
                 type="button"
                 @click="showDeactivateModal = true"
                 class="w-full flex items-center justify-between px-6 py-4 hover:bg-red-50/50 dark:hover:bg-red-950/20 transition cursor-pointer text-left group"
             >
                 <div class="flex items-start space-x-4">
-                    <HeartBrokenOutline :size="24" class="text-gray-500 group-hover:text-red-500 transition flex-shrink-0 mt-0.5" />
+                    <TrashCanOutline :size="24" class="text-gray-500 group-hover:text-red-500 transition flex-shrink-0 mt-0.5" />
                     <div>
                         <div class="text-[15px] font-bold text-gray-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition">
-                            Deactivate your account
+                            Delete your account
                         </div>
                         <div class="text-[13px] text-gray-500 mt-0.5">
-                            Find out how you can deactivate your account.
+                            Xóa vĩnh viễn tài khoản và toàn bộ dữ liệu ngay lập tức.
                         </div>
                     </div>
                 </div>
@@ -305,33 +305,33 @@ const downloadArchive = () => {
             </div>
         </div>
 
-        <!-- MODAL 3: Deactivate Account -->
+        <!-- MODAL 3: Delete Account Permanently -->
         <div v-if="showDeactivateModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" @click="showDeactivateModal = false">
             <div class="bg-white dark:bg-[#16181c] rounded-2xl w-full max-w-lg p-6 shadow-2xl border border-gray-200 dark:border-gray-800" @click.stop>
                 <div class="flex items-center space-x-3 pb-3 border-b border-gray-200 dark:border-gray-800">
-                    <AlertCircleOutline :size="26" class="text-red-500 flex-shrink-0" />
+                    <TrashCanOutline :size="26" class="text-red-500 flex-shrink-0" />
                     <div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">This will deactivate your account</h3>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Xóa vĩnh viễn tài khoản của bạn</h3>
                         <p class="text-xs text-gray-500">@{{ accountInfo.username }}</p>
                     </div>
                 </div>
 
                 <div class="mt-4 space-y-3 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                     <p>
-                        You are about to start the process of deactivating your X account. Your display name, @username, and public profile will no longer be viewable on X.
+                        Bạn đang thực hiện xóa tài khoản MiniX <strong>@{{ accountInfo.username }}</strong>. Toàn bộ bài đăng, bình luận, tin nhắn trò chuyện, người theo dõi và dữ liệu cá nhân của bạn sẽ bị xóa vĩnh viễn.
                     </p>
-                    <div class="p-3 bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-800/40 rounded-xl text-xs text-yellow-800 dark:text-yellow-200">
-                        <strong>What else you should know:</strong> You can restore your X account if it was accidentally or wrongfully deactivated for up to 30 days after deactivation by simply logging back in.
+                    <div class="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 rounded-xl text-xs text-red-700 dark:text-red-300 font-medium">
+                        <strong>Lưu ý quan trọng:</strong> Tài khoản sẽ bị xóa hoàn toàn ngay lập tức.
                     </div>
                 </div>
 
                 <form @submit.prevent="deactivateAccount" class="mt-5">
-                    <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Confirm your password to proceed</label>
+                    <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Nhập mật khẩu của bạn để xác nhận xóa</label>
                     <input
                         v-model="deactivateForm.password"
                         type="password"
                         required
-                        placeholder="Enter your password"
+                        placeholder="Nhập mật khẩu hiện tại"
                         class="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-black border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
                     />
                     <p v-if="deactivateForm.errors.password" class="text-xs text-red-500 mt-1">
@@ -342,16 +342,16 @@ const downloadArchive = () => {
                         <button
                             type="button"
                             @click="showDeactivateModal = false"
-                            class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-bold text-sm rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+                            class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-bold text-sm rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition cursor-pointer"
                         >
-                            Cancel
+                            Hủy
                         </button>
                         <button
                             type="submit"
                             :disabled="deactivateForm.processing"
-                            class="px-5 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-bold text-sm rounded-full transition shadow"
+                            class="px-5 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-bold text-sm rounded-full transition shadow cursor-pointer"
                         >
-                            {{ deactivateForm.processing ? 'Deactivating...' : 'Deactivate' }}
+                            {{ deactivateForm.processing ? 'Đang xóa...' : 'Xóa tài khoản vĩnh viễn' }}
                         </button>
                     </div>
                 </form>

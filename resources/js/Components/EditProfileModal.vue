@@ -62,25 +62,25 @@ const submit = () => {
         class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
         @click.self="emit('close')"
     >
-        <div class="bg-black border border-gray-800 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden my-6">
+        <div class="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden my-6 text-gray-900 dark:text-white transition-colors duration-200">
             <!-- Modal Header -->
-            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-800">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800">
                 <div class="flex items-center space-x-4">
                     <button
                         type="button"
                         @click="emit('close')"
-                        class="p-1.5 rounded-full hover:bg-gray-800 text-white cursor-pointer transition"
+                        class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white cursor-pointer transition"
                     >
                         <Close :size="20" />
                     </button>
-                    <h2 class="text-lg font-bold text-white">Edit profile</h2>
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">Edit profile</h2>
                 </div>
 
                 <button
                     type="button"
                     :disabled="form.processing"
                     @click="submit"
-                    class="bg-white hover:bg-gray-200 text-black font-bold text-sm px-5 py-1.5 rounded-full transition disabled:opacity-50 cursor-pointer"
+                    class="bg-gray-900 hover:bg-black text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black font-bold text-sm px-5 py-1.5 rounded-full transition disabled:opacity-50 cursor-pointer shadow-sm"
                 >
                     <span v-if="form.processing">Saving...</span>
                     <span v-else>Save</span>
@@ -90,7 +90,7 @@ const submit = () => {
             <!-- Form Content -->
             <form @submit.prevent="submit" class="max-h-[80vh] overflow-y-auto">
                 <!-- Banner Image Field -->
-                <div class="relative h-44 bg-gray-900 overflow-hidden">
+                <div class="relative h-44 bg-gray-100 dark:bg-gray-900 overflow-hidden">
                     <img
                         :src="bannerPreview"
                         class="w-full h-full object-cover opacity-80"
@@ -116,7 +116,7 @@ const submit = () => {
 
                 <!-- Avatar Image Field -->
                 <div class="px-4 -mt-14 mb-4 relative flex justify-between items-end">
-                    <div class="relative rounded-full ring-4 ring-black overflow-hidden w-24 h-24 bg-gray-800">
+                    <div class="relative rounded-full ring-4 ring-white dark:ring-black overflow-hidden w-24 h-24 bg-gray-100 dark:bg-gray-800">
                         <img
                             :src="avatarPreview"
                             class="w-full h-full object-cover"
@@ -151,7 +151,7 @@ const submit = () => {
                             v-model="form.name"
                             required
                             maxlength="50"
-                            class="w-full bg-black border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-[#1C9CEF] focus:ring-0 text-sm"
+                            class="w-full bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-[#1C9CEF] focus:ring-0 text-sm transition"
                             placeholder="Your display name"
                         />
                         <div v-if="form.errors.name" class="text-red-400 text-xs mt-1">{{ form.errors.name }}</div>
@@ -161,13 +161,13 @@ const submit = () => {
                     <div>
                         <div class="flex justify-between items-center mb-1">
                             <label class="block text-xs font-semibold text-gray-500">Bio</label>
-                            <span class="text-xs text-gray-600">{{ 160 - (form.bio ? form.bio.length : 0) }}</span>
+                            <span class="text-xs text-gray-400 dark:text-gray-600">{{ 160 - (form.bio ? form.bio.length : 0) }}</span>
                         </div>
                         <textarea
                             v-model="form.bio"
                             rows="3"
                             maxlength="160"
-                            class="w-full bg-black border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-[#1C9CEF] focus:ring-0 text-sm resize-none"
+                            class="w-full bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-[#1C9CEF] focus:ring-0 text-sm resize-none transition"
                             placeholder="Tell the world about yourself"
                         ></textarea>
                         <div v-if="form.errors.bio" class="text-red-400 text-xs mt-1">{{ form.errors.bio }}</div>
@@ -180,7 +180,7 @@ const submit = () => {
                             type="text"
                             v-model="form.location"
                             maxlength="100"
-                            class="w-full bg-black border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-[#1C9CEF] focus:ring-0 text-sm"
+                            class="w-full bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-[#1C9CEF] focus:ring-0 text-sm transition"
                             placeholder="e.g. San Francisco, CA"
                         />
                         <div v-if="form.errors.location" class="text-red-400 text-xs mt-1">{{ form.errors.location }}</div>
@@ -193,7 +193,7 @@ const submit = () => {
                             type="url"
                             v-model="form.website"
                             maxlength="100"
-                            class="w-full bg-black border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-[#1C9CEF] focus:ring-0 text-sm"
+                            class="w-full bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-[#1C9CEF] focus:ring-0 text-sm transition"
                             placeholder="https://yourwebsite.com"
                         />
                         <div v-if="form.errors.website" class="text-red-400 text-xs mt-1">{{ form.errors.website }}</div>
@@ -205,7 +205,7 @@ const submit = () => {
                         <input
                             type="date"
                             v-model="form.birthdate"
-                            class="w-full bg-black border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-[#1C9CEF] focus:ring-0 text-sm"
+                            class="w-full bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:border-[#1C9CEF] focus:ring-0 text-sm transition"
                         />
                         <div v-if="form.errors.birthdate" class="text-red-400 text-xs mt-1">{{ form.errors.birthdate }}</div>
                     </div>

@@ -1,5 +1,5 @@
 <template>
-    <Head title="MiniX AI / X" />
+    <Head title="MiniX AI" />
 
     <TwitterLayout>
         <div class="flex flex-col h-[100vh] bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-200">
@@ -256,8 +256,8 @@ const promptSuggestions = [
     },
     {
         icon: '🚀',
-        title: 'Tính năng của Twitter Clone',
-        prompt: 'Kể tên các tính năng công nghệ nổi bật được xây dựng trong dự án Twitter Clone này.',
+        title: 'Tính năng của MiniX',
+        prompt: 'Kể tên các tính năng công nghệ nổi bật được xây dựng trong dự án MiniX này.',
     },
 ]
 

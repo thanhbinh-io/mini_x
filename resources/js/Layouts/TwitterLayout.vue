@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { router, usePage, Link } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Magnify from 'vue-material-design-icons/Magnify.vue';
@@ -35,8 +35,29 @@ const props = defineProps({
 
 const page = usePage();
 const user = computed(() => page.props.auth?.user);
-const unreadNotificationsCount = computed(() => page.props.auth?.unread_notifications_count || 0);
-const unreadMessagesCount = computed(() => page.props.auth?.unread_messages_count || 0);
+const localUnreadNotifications = ref(page.props.auth?.unread_notifications_count || 0);
+const localUnreadMessages = ref(page.props.auth?.unread_messages_count || 0);
+
+watch(() => page.props.auth?.unread_notifications_count, (newVal) => {
+    if (typeof newVal === 'number') localUnreadNotifications.value = newVal;
+});
+watch(() => page.props.auth?.unread_messages_count, (newVal) => {
+    if (typeof newVal === 'number') localUnreadMessages.value = newVal;
+});
+
+let unreadPollTimer = null;
+const fetchUnreadCounts = async () => {
+    if (!user.value) return;
+    try {
+        const res = await window.axios.get('/api/unread-counts');
+        if (res.data) {
+            localUnreadNotifications.value = Number(res.data.unread_notifications) || 0;
+            localUnreadMessages.value = Number(res.data.unread_messages) || 0;
+        }
+    } catch (e) {
+        // silently ignore error
+    }
+};
 const isAdmin = computed(() => page.props.auth?.is_admin || false);
 const isSuspended = computed(() => page.props.auth?.is_suspended || false);
 const isChatPage = computed(() => {
@@ -119,10 +140,16 @@ const handleWindowClick = () => {
 onMounted(() => {
     initTheme();
     window.addEventListener('click', handleWindowClick);
+    if (user.value) {
+        unreadPollTimer = setInterval(fetchUnreadCounts, 3000);
+    }
 });
 
 onUnmounted(() => {
     window.removeEventListener('click', handleWindowClick);
+    if (unreadPollTimer) {
+        clearInterval(unreadPollTimer);
+    }
 });
 
 const getFile = (e) => {
@@ -220,8 +247,8 @@ const textareaInput = (e) => {
 
                     <MenuItem iconString="Home" href="/" :collapsed="isChatPage" />
                     <MenuItem iconString="Explore" :href="route('explore')" :collapsed="isChatPage" />
-                    <MenuItem iconString="Notifications" :href="user ? route('notifications.index') : route('login')" :badgeCount="unreadNotificationsCount" :collapsed="isChatPage" />
-                    <MenuItem iconString="Chat" :href="user ? route('messages.index') : route('login')" :badgeCount="unreadMessagesCount" :collapsed="isChatPage" />
+                    <MenuItem iconString="Notifications" :href="user ? route('notifications.index') : route('login')" :badgeCount="localUnreadNotifications" :collapsed="isChatPage" />
+                    <MenuItem iconString="Chat" :href="user ? route('messages.index') : route('login')" :badgeCount="localUnreadMessages" :collapsed="isChatPage" />
                     <MenuItem iconString="Bot" :href="user ? route('bot.index') : route('login')" :collapsed="isChatPage" />
                     <MenuItem iconString="Bookmarks" :href="user ? route('bookmarks.index') : route('login')" :collapsed="isChatPage" />
                     <MenuItem iconString="Profile" :href="user ? route('users.profile', user.username) : route('login')" :collapsed="isChatPage" />
@@ -462,7 +489,7 @@ const textareaInput = (e) => {
                             focus:ring-0
                         "
                         type="text"
-                        placeholder="Search Twitter"
+                        placeholder="Search MiniX"
                     >
                 </form>
 

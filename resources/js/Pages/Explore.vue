@@ -30,25 +30,25 @@ const clickTrend = (topic) => {
 </script>
 
 <template>
-    <Head title="Explore / Twitter" />
+    <Head title="Explore" />
 
     <TwitterLayout>
-        <div class="text-white min-h-screen border-b border-gray-800">
+        <div class="text-gray-900 dark:text-white min-h-screen border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black transition-colors duration-200">
             <!-- Header bar with search input -->
-            <div class="sticky top-0 bg-black/80 backdrop-blur-md z-20 px-4 py-2 border-b border-gray-800 flex items-center space-x-4">
-                <form @submit.prevent="search" class="flex-1 flex items-center bg-[#202327] rounded-full px-4 py-2 focus-within:ring-1 focus-within:ring-[#1C9CEF]">
+            <div class="sticky top-0 bg-white/80 dark:bg-black/80 backdrop-blur-md z-20 px-4 py-2 border-b border-gray-200 dark:border-gray-800 flex items-center space-x-4">
+                <form @submit.prevent="search" class="flex-1 flex items-center bg-gray-100 dark:bg-[#202327] rounded-full px-4 py-2 focus-within:ring-1 focus-within:ring-[#1C9CEF]">
                     <Magnify fillColor="#5e5c5c" :size="20" class="mr-2.5" />
                     <input
                         v-model="searchTerm"
                         type="text"
-                        placeholder="Search Twitter"
-                        class="w-full bg-transparent border-0 focus:ring-0 text-white placeholder-gray-500 text-sm p-0"
+                        placeholder="Search MiniX"
+                        class="w-full bg-transparent border-0 focus:ring-0 text-gray-900 dark:text-white placeholder-gray-500 text-sm p-0"
                     />
                 </form>
 
                 <Link
                     :href="route('settings.account')"
-                    class="p-2 rounded-full hover:bg-gray-800 text-gray-400 hover:text-white transition cursor-pointer"
+                    class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer"
                     title="Explore settings"
                 >
                     <CogOutline :size="20" />
@@ -56,21 +56,21 @@ const clickTrend = (topic) => {
             </div>
 
             <!-- Trends List Section -->
-            <div class="border-b border-gray-800 pb-2">
-                <div class="px-4 pt-4 pb-2 text-xl font-black text-white">
+            <div class="border-b border-gray-200 dark:border-gray-800 pb-2">
+                <div class="px-4 pt-4 pb-2 text-xl font-black text-gray-900 dark:text-white">
                     Trends for you
                 </div>
 
-                <div v-if="trends && trends.length > 0" class="divide-y divide-gray-900">
+                <div v-if="trends && trends.length > 0" class="divide-y divide-gray-100 dark:divide-gray-900">
                     <div
                         v-for="(trend, idx) in trends"
                         :key="idx"
                         @click="clickTrend(trend.topic)"
-                        class="px-4 py-3 hover:bg-gray-900 transition cursor-pointer flex justify-between items-center"
+                        class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-900 transition cursor-pointer flex justify-between items-center"
                     >
                         <div>
                             <div class="text-xs text-gray-500">{{ trend.category }}</div>
-                            <div class="text-white font-bold text-[15px] mt-0.5">{{ trend.topic }}</div>
+                            <div class="text-gray-900 dark:text-white font-bold text-[15px] mt-0.5">{{ trend.topic }}</div>
                             <div class="text-xs text-gray-500 mt-0.5">{{ trend.tweets_count }}</div>
                         </div>
                     </div>
@@ -82,8 +82,8 @@ const clickTrend = (topic) => {
             </div>
 
             <!-- Explore Tweets Section -->
-            <div class="divide-y divide-gray-800">
-                <div class="px-4 pt-4 pb-2 text-xl font-black text-white">
+            <div class="divide-y divide-gray-200 dark:divide-gray-800">
+                <div class="px-4 pt-4 pb-2 text-xl font-black text-gray-900 dark:text-white">
                     Explore posts
                 </div>
 

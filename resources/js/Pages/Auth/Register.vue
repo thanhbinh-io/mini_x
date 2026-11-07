@@ -28,7 +28,7 @@ const submit = () => {
 
         <div class="mb-6">
             <h1 class="text-2xl font-black text-white">Create your account</h1>
-            <p class="text-sm text-gray-400 mt-1">Join the Twitter clone community</p>
+            <p class="text-sm text-gray-400 mt-1">Join the MiniX community</p>
         </div>
 
         <form @submit.prevent="submit">

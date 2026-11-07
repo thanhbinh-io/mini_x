@@ -27,13 +27,14 @@ Route::middleware('guest')->group(function () {
 
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
         ->name('password.email');
-
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-        ->name('password.reset');
-
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-        ->name('password.store');
 });
+
+// Password reset routes (accessible from email link without guest restriction)
+Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+    ->name('password.reset');
+
+Route::post('reset-password', [NewPasswordController::class, 'store'])
+    ->name('password.store');
 
 // Email verification link from email (signed link, accessible without login)
 Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)

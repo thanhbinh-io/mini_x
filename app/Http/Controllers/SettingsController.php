@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class SettingsController extends Controller
@@ -168,9 +169,17 @@ class SettingsController extends Controller
     }
 
     /**
-     * Deactivate user account.
+     * Delete user account permanently without waiting 30 days.
      */
     public function deactivate(Request $request)
+    {
+        return $this->destroyAccount($request);
+    }
+
+    /**
+     * Delete user account permanently.
+     */
+    public function destroyAccount(Request $request)
     {
         $request->validate([
             'password' => 'required',
@@ -179,17 +188,29 @@ class SettingsController extends Controller
         $user = $request->user();
 
         if (!Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'Incorrect password entered.']);
+            return back()->withErrors(['password' => 'Mật khẩu xác nhận không chính xác.']);
         }
 
-        $user->deactivated_at = now();
-        $user->save();
+        // Xóa file avatar & banner nếu có
+        if ($user->avatar_path && Storage::disk('public')->exists($user->avatar_path)) {
+            Storage::disk('public')->delete($user->avatar_path);
+        }
+        if ($user->banner_path && Storage::disk('public')->exists($user->banner_path)) {
+            Storage::disk('public')->delete($user->banner_path);
+        }
 
+        // Xóa thông báo liên quan đến user
+        $user->notifications()->delete();
+
+        // Đăng xuất và hủy phiên đăng nhập
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('message', 'Your account has been deactivated.');
+        // Xóa vĩnh viễn user khỏi database (cascade xóa các bài viết, tương tác, tin nhắn...)
+        $user->delete();
+
+        return redirect('/')->with('success', 'Tài khoản của bạn đã được xóa vĩnh viễn khỏi MiniX.');
     }
 }
 
