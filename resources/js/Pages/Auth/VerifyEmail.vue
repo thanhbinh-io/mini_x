@@ -91,19 +91,5 @@ const verificationLinkSent = computed(
             </div>
         </form>
 
-        <!-- Nút kích hoạt nhanh chỉ hiển thị ở môi trường kiểm thử Local -->
-        <div v-if="isLocal" class="mt-8 pt-4 border-t border-gray-800 text-center">
-            <p class="text-xs text-gray-500 mb-2">
-                Dành cho Giảng viên chấm bài / Môi trường kiểm thử Local:
-            </p>
-            <button
-                type="button"
-                @click="devVerify"
-                :disabled="devForm.processing"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-yellow-400 bg-yellow-400/10 hover:bg-yellow-400/20 border border-yellow-400/30 transition-all cursor-pointer"
-            >
-                ⚡ Kích hoạt tài khoản ngay (Không cần mở Gmail)
-            </button>
-        </div>
     </GuestLayout>
 </template>

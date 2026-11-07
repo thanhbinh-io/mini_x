@@ -10,10 +10,10 @@ Dự án được phân bổ đồng đều trách nhiệm và khối lượng c
 
 | STT | Thành viên | Vai trò | Tỷ lệ | Phân hệ đảm nhiệm chi tiết |
 |:---:|---|:---:|:---:|---|
-| 1 | **Nguyễn Thanh Bình** | **Trưởng nhóm** | **25%** | **Nền tảng kiến trúc (Core Architecture):**<br>- Thiết lập Laravel 12 + Vue 3 (Inertia.js), Tailwind CSS v3 Dark/Light mode.<br>- Thiết kế cấu trúc Database tổng thể, chuẩn hóa Routing & Authentication (Breeze Dark Theme).<br>- Quản lý GitHub Repository, điều phối Code Review và Merge các Pull Request. |
+| 1 | **Phạm Thanh Bình** | **Trưởng nhóm** | **25%** | **Nền tảng kiến trúc (Core Architecture):**<br>- Thiết lập Laravel 12 + Vue 3 (Inertia.js), Tailwind CSS v3 Dark/Light mode.<br>- Thiết kế cấu trúc Database tổng thể, chuẩn hóa Routing & Authentication (Breeze Dark Theme).<br>- Quản lý GitHub Repository, điều phối Code Review và Merge các Pull Request. |
 | 2 | **Võ Tấn Đạt** | **Thành viên** | **25%** | **Hệ thống Bài viết & Tương tác (Tweets & Interactions):**<br>- Đăng bài viết (Tweet), upload ảnh/video, hiển thị số lượt xem (Views Count).<br>- Tương tác: Thả tim (Like), Đăng lại (Retweet), Đánh dấu (Bookmark), Trích dẫn (Quote Tweet).<br>- Chuỗi hội thoại bình luận phân cấp (Thread Replies) và Khám phá xu hướng Hashtag (#Trending). |
 | 3 | **Nguyễn Quốc Khánh** | **Thành viên** | **25%** | **Mạng lưới Kết nối & Nhắn tin (Network & Direct Messages):**<br>- Cơ chế Theo dõi (Follow / Unfollow), Chặn (Block), Tắt tiếng (Mute).<br>- Trang Hồ sơ cá nhân người dùng (Avatar, Banner, Bio, Tabs: Tweets / Replies / Likes / Media).<br>- Hộp thư nhắn tin trực tiếp 1-1 (Direct Messages) tìm kiếm người nhận và trò chuyện riêng tư. |
-| 4 | **Huỳnh Triệu An** | **Thành viên** | **25%** | **Trợ lý AI, Thông báo & Quản trị (AI, Notifications & Admin):**<br>- Tích hợp trợ lý trí tuệ nhân tạo **MiniX AI Bot** với Google Gemini API (render Markdown & nút copy code).<br>- Trung tâm thông báo hệ thống tự động (Notifications khi có tương tác).<br>- Cài đặt bảo mật (Private Account, đổi mật khẩu) và Bảng điều khiển Quản trị viên (Admin Dashboard duyệt báo cáo, khóa user, xóa tweet). |
+| 4 | **Huỳnh Triều An** | **Thành viên** | **25%** | **Trợ lý AI, Thông báo & Quản trị (AI, Notifications & Admin):**<br>- Tích hợp trợ lý trí tuệ nhân tạo **MiniX AI Bot** với Google Gemini API (render Markdown & nút copy code).<br>- Trung tâm thông báo hệ thống tự động (Notifications khi có tương tác).<br>- Cài đặt bảo mật (Private Account, đổi mật khẩu) và Bảng điều khiển Quản trị viên (Admin Dashboard duyệt báo cáo, khóa user, xóa tweet). |
 
 ---
 
@@ -21,9 +21,9 @@ Dự án được phân bổ đồng đều trách nhiệm và khối lượng c
 
 - **Xác thực & Bảo mật:** Đăng nhập linh hoạt bằng Email hoặc Username, xác thực kích hoạt tài khoản qua Gmail (Email Verification), bảo vệ route bằng Middleware `verified` và `check.suspended`, phân quyền Admin/User chặt chẽ.
 - **Dark Mode / Light Mode:** Chuyển đổi giao diện Sáng / Tối mượt mà chuẩn phong cách X.com, lưu trạng thái tự động vào trình duyệt.
-- **Tương tác thời gian thực với Inertia.js:** Trải nghiệm Single Page Application (SPA) tải trang tức thì, không giật lag màn hình.
+- **Điều hướng SPA bằng Inertia.js:** Trải nghiệm Single Page Application (SPA) tải trang tức thì, không giật lag màn hình; hộp thư tin nhắn 1-1 cập nhật nội dung bằng cơ chế polling chu kỳ ~2.5 giây.
 - **Xử lý Thread Tweets đa cấp:** Xem chi tiết bài viết cùng toàn bộ cây bình luận liên quan chuẩn xác.
-- **MiniX AI Trợ lý thông minh:** Tích hợp Google Gemini trả lời tức thì, nhận diện ngữ cảnh và hỗ trợ viết bài/mã lập trình.
+- **MiniX AI Trợ lý thông minh:** Tích hợp Google Gemini trả lời tức thì, nhận diện ngữ cảnh và hỗ trợ viết bài/mã lập trình (yêu cầu đăng nhập).
 - **Admin Dashboard chuyên nghiệp:** Thống kê số lượng bài đăng, quản trị viên có thể khóa tài khoản vi phạm và xử lý báo cáo nội dung (Reports).
 
 ---
@@ -33,7 +33,7 @@ Dự án được phân bổ đồng đều trách nhiệm và khối lượng c
 - **Backend:** [Laravel 12](https://laravel.com/) (PHP 8.2+) – Eloquent ORM, Seeders, Policies, Middlewares.
 - **Frontend:** [Vue 3](https://vuejs.org/) (Composition API `<script setup>`) + [Inertia.js v2](https://inertiajs.com/).
 - **CSS Framework:** [Tailwind CSS v3](https://tailwindcss.com/) – Custom dark mode palette (`darkMode: 'class'`).
-- **Trí tuệ nhân tạo:** [Google Gemini API](https://ai.google.dev/) (`gemini-1.5-flash`).
+- **Trí tuệ nhân tạo:** [Google Gemini API](https://ai.google.dev/) (`gemini-3.5-flash-lite`, cấu hình linh hoạt qua biến `GEMINI_MODEL` trong `.env`).
 - **Cơ sở dữ liệu:** MySQL (XAMPP MariaDB).
 - **Công cụ đóng gói:** [Vite](https://vitejs.dev/).
 
@@ -71,32 +71,83 @@ Tạo khóa mã hóa ứng dụng Laravel:
 php artisan key:generate
 ```
 
+---
+
+## 🔑 Hướng Dẫn Lấy Khóa API Google Gemini (Kích hoạt MiniX AI)
+
+Trợ lý **MiniX AI** tích hợp trực tiếp mô hình ngôn ngữ lớn của Google. Để kích hoạt tính năng chat thông minh này, bạn thực hiện như sau:
+
+1. **Truy cập Google AI Studio:** Mở trình duyệt vào trang [https://aistudio.google.com/](https://aistudio.google.com/) và đăng nhập bằng tài khoản Google của bạn.
+2. **Tạo API Key:**
+   - Tại menu bên trái, chọn **Get API key** (hoặc truy cập thẳng [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)).
+   - Bấm nút **Create API key** $\rightarrow$ Chọn **Create API key in new project** (hoặc chọn project Google Cloud sẵn có nếu có).
+   - Hệ thống sẽ hiển thị một chuỗi ký tự dạng `AIzaSy...`. Bấm **Copy** để sao chép khóa này.
+3. **Cấu hình vào file `.env`:**
+   - Mở file `.env` ở thư mục gốc của dự án, tìm đến 2 dòng sau và dán khóa vừa copy vào:
+   ```ini
+   GEMINI_API_KEY=AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   GEMINI_MODEL=gemini-3.5-flash-lite
+   ```
+4. **Áp dụng cấu hình:**
+   ```bash
+   php artisan config:clear
+   ```
+> [!TIP]
+> Khóa Gemini API hoàn toàn **miễn phí** với hạn mức sử dụng rất lớn cho mục đích học tập và phát triển cá nhân.
+
+---
+
+## 📧 Hướng Dẫn Cấu Hình Gmail Gửi Mail Xác Thực (Email Verification)
+
+Dự án hỗ trợ tính năng gửi email xác thực tài khoản thật (`/verify-email`) và gửi link đặt lại mật khẩu khi quên tài khoản thông qua giao thức **Gmail SMTP**.
+
+Google không cho phép dùng mật khẩu đăng nhập tài khoản thông thường mà yêu cầu tạo **Mật khẩu ứng dụng (App Password 16 ký tự)**:
+
+### 1. Tạo Mật khẩu ứng dụng (App Password) trên Google
+1. Mở trang Quản lý tài khoản Google: [https://myaccount.google.com/](https://myaccount.google.com/).
+2. Chọn mục **Bảo mật** (Security) $\rightarrow$ Đảm bảo tài khoản đã **Bật Xác minh 2 bước (2-Step Verification)**.
+3. Tìm kiếm từ khóa **"Mật khẩu ứng dụng"** trên thanh tìm kiếm của Google Account (hoặc truy cập trực tiếp link: [https://myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)).
+4. Nhập tên ứng dụng (ví dụ: `MiniX`) $\rightarrow$ Bấm **Tạo** (Create).
+5. Google sẽ hiển thị một cửa sổ chứa mã mật khẩu gồm **16 ký tự** (ví dụ: `abcd efgh ijkl mnop`). Hãy copy chuỗi 16 ký tự này (lưu ý: bỏ các dấu cách khi dán).
+
+### 2. Điền thông tin vào file `.env`
+Mở file `.env` và cập nhật cụm cấu hình Mail như sau:
+
+```ini
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=email_cua_ban@gmail.com
+MAIL_PASSWORD=abcdefghijklmnop             # Dán 16 ký tự App Password tạo ở bước trên (không khoảng trắng)
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="email_cua_ban@gmail.com"
+MAIL_FROM_NAME="MiniX"
+```
+
+### 3. Xóa cache cấu hình để Laravel nhận thông tin mới:
+```bash
+php artisan config:clear
+```
+
 > [!NOTE]
-> File `.env.example` đã được cấu hình sẵn 100% phù hợp với chuẩn mặc định của XAMPP:
-> ```ini
-> DB_CONNECTION=mysql
-> DB_HOST=127.0.0.1
-> DB_PORT=3306
-> DB_DATABASE=mini_x
-> DB_USERNAME=root
-> DB_PASSWORD=
-> ```
+> **Chế độ kiểm thử offline nhanh:** Nếu không muốn cấu hình gửi mail thật, khi đăng ký tài khoản mới xong hệ thống sẽ chuyển đến trang `/verify-email`. Tại đây nhóm đã trang bị sẵn nút **"⚡ Kích hoạt tài khoản ngay (Chế độ phát triển)"** để kích hoạt tài khoản ngay tức thì mà không cần check hòm thư!
+
+---
+
+## 🗄️ Khởi Tạo Cơ Sở Dữ Liệu & Chạy Ứng Dụng
 
 ### Bước 4: Khởi tạo Cơ sở dữ liệu
 
 1. Bật **Apache** và **MySQL** trong ứng dụng **XAMPP Control Panel**.
 2. Mở trình duyệt vào `http://localhost/phpmyadmin`, tạo một Database mới có tên: **`mini_x`** (Bảng mã: `utf8mb4_unicode_ci`).
-3. Khởi tạo cấu trúc bảng và nạp dữ liệu mẫu (chọn 1 trong 2 cách bên dưới):
+3. Khởi tạo cấu trúc bảng và nạp dữ liệu mẫu bằng lệnh:
+   ```bash
+   php artisan migrate --seed
+   ```
+   *(Lệnh này tự động tạo 16 bảng cơ sở dữ liệu và nạp toàn bộ bài viết, người dùng mẫu, hashtag và cấp quyền Admin).*
 
-* **Cách 1 (Khuyên dùng - Chuẩn Laravel):** Chạy 1 câu lệnh duy nhất tại terminal:
-  ```bash
-  php artisan migrate:fresh --seed
-  ```
-  *(Lệnh này tự động tạo 15 bảng cơ sở dữ liệu và nạp toàn bộ bài viết, người dùng mẫu, hashtag và cấp quyền Admin).*
-
-* **Cách 2 (Dự phòng truyền thống qua phpMyAdmin):**
-  - Mở `http://localhost/phpmyadmin` > Chọn database `mini_x`.
-  - Chọn tab **Import (Nhập)** > Chọn file `database/mini_x.sql` trong thư mục dự án và bấm **Import**.
+> [!WARNING]
+> **Lưu ý về lệnh `migrate:fresh`:** Nếu bạn chạy lệnh `php artisan migrate:fresh --seed`, Laravel sẽ **XÓA SẠCH TOÀN BỘ BẢNG CŨ (DROP ALL TABLES)** trong cơ sở dữ liệu được cấu hình trước khi tạo lại từ đầu. Với cài đặt lần đầu trên database mới, hãy dùng `php artisan migrate --seed`. Chỉ dùng `migrate:fresh` khi bạn thực sự muốn reset trắng toàn bộ dữ liệu.
 
 ### Bước 5: Tạo liên kết thư mục lưu trữ media
 ```bash
@@ -119,7 +170,7 @@ Mở trình duyệt và truy cập: **`http://127.0.0.1:8000`**
 
 ## 👤 Danh Sách Tài Khoản Thử Nghiệm (Demo Accounts)
 
-Mật khẩu mặc định cho toàn bộ tài khoản mẫu là quy ước chuẩn quốc tế của Laravel: **`password`**
+Mật khẩu mặc định cho toàn bộ tài khoản demo là: **`password`**
 
 | Vai trò / Quyền | Tên hiển thị | Tên tài khoản | Email đăng nhập | Mật khẩu | Chức năng nổi bật có thể test |
 |---|---|---|---|---|---|
@@ -127,10 +178,22 @@ Mật khẩu mặc định cho toàn bộ tài khoản mẫu là quy ước chu�
 | 🧑 **Người dùng mẫu 1** | Elon Musk | `@elonmusk` | `elon@x.com` | `password` | Đăng tweet, đính kèm media, tương tác Like/Retweet, nhắn tin 1-1. |
 | 🧑 **Người dùng mẫu 2** | Taylor Otwell | `@taylorotwell` | `taylor@laravel.com` | `password` | Thử nghiệm follow/unfollow, đăng tweet bình luận. |
 | 🧑 **Người dùng mẫu 3** | Evan You | `@youyuxi` | `evan@vuejs.org` | `password` | Trò chuyện trực tiếp (DM) và kiểm tra tính năng riêng tư. |
-| 🤖 **MiniX AI Bot** | MiniX AI | `@geminibot` | *Tích hợp sẵn* | *Không cần đăng nhập* | Trò chuyện trực tiếp tại mục **MiniX AI** trên thanh điều hướng bên trái. |
+| 🤖 **MiniX AI Bot** | MiniX AI | `@geminibot` | *Tích hợp sẵn* | *Yêu cầu đăng nhập* | Trò chuyện trực tiếp tại mục **MiniX AI** trên thanh điều hướng (sau khi đăng nhập một tài khoản bất kỳ). |
 
 > [!TIP]
 > **Quy chuẩn mật khẩu:** Khi người dùng tự tay đăng ký tài khoản mới (`/register`) hoặc đổi mật khẩu trong phần cài đặt (`/settings/account`), hệ thống áp dụng đầy đủ tiêu chuẩn bảo mật mạnh của Laravel (`Rules\Password::defaults()`).
+
+---
+
+## ⚠️ Các Giới Hạn Hiện Tại Của Hệ Thống (Current Limitations)
+
+Để đảm bảo tính minh bạch học thuật và trung thực khi báo cáo đồ án, nhóm ghi nhận các giới hạn kỹ thuật hiện tại:
+
+1. **Cơ chế cập nhật tin nhắn:** Hệ thống nhắn tin trực tiếp 1-1 hiện sử dụng cơ chế **Polling định kỳ khoảng 2.5 giây** (`resources/js/Pages/Messages/Index.vue:53`) để đồng bộ tin nhắn mới, chưa nâng cấp lên WebSocket toàn thời gian (Laravel Reverb / Pusher).
+2. **Phụ thuộc kết nối Internet bên ngoài:** 
+   - Trợ lý **MiniX AI** phụ thuộc vào Google Gemini API (cần Internet và khóa `GEMINI_API_KEY` hợp lệ trong `.env`).
+   - Gửi email xác thực tài khoản thật phụ thuộc vào Google SMTP. Trong môi trường kiểm thử local hoặc không có mạng, hệ thống đã cung cấp nút **"⚡ Kích hoạt tài khoản ngay"** tại trang `/verify-email`.
+3. **Tính năng "Tài khoản riêng tư" (`protect_posts`):** Trạng thái bật/tắt bảo vệ bài viết đã được lưu trữ trong cơ sở dữ liệu (`users.settings` JSON) và hiển thị trên giao diện cài đặt (`/settings/privacy`), tuy nhiên logic backend để ẩn tweet của tài khoản riêng tư đối với người chưa follow đang là tính năng thử nghiệm và tiếp tục được hoàn thiện trong phiên bản kế tiếp.
 
 ---
 
@@ -143,9 +206,8 @@ mini_x/
 │   ├── Http/Middleware/        # Middleware phân quyền (Admin, CheckSuspended, Inertia)
 │   └── Models/                 # Eloquent Models (User, Tweet, Like, Follow, Message, Report, ...)
 ├── database/
-│   ├── migrations/             # 15 file migration tạo bảng theo trình tự thời gian
-│   ├── seeders/                # TweetsSeeder & AdminSeeder nạp dữ liệu mẫu
-│   └── mini_x.sql              # Bản xuất dự phòng cho phpMyAdmin
+│   ├── migrations/             # 16 file migration tạo bảng theo trình tự thời gian
+│   └── seeders/                # TweetsSeeder & AdminSeeder nạp dữ liệu mẫu
 ├── resources/
 │   ├── js/
 │   │   ├── Components/         # Các UI component tái sử dụng (Button, Modal, Dropdown, ...)
@@ -153,7 +215,7 @@ mini_x/
 │   │   └── Pages/              # Các trang Vue (Welcome/Feed, Profile, Messages, Admin, Bot, ...)
 │   └── views/app.blade.php     # Template gốc tích hợp script Dark Mode và Ziggy Routes
 ├── routes/
-│   ├── web.php                 # Toàn bộ 69 routes chức năng của ứng dụng
+│   ├── web.php                 # Toàn bộ routes chức năng của ứng dụng
 │   └── auth.php                # Routes xác thực đăng nhập, đăng ký, quên mật khẩu
 └── tailwind.config.js          # Cấu hình Tailwind CSS v3 hỗ trợ darkMode: 'class'
 ```

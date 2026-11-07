@@ -9,7 +9,6 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RetweetController;
 use App\Http\Controllers\SearchController;
@@ -55,9 +54,7 @@ Route::middleware(['auth', 'verified', 'check.suspended'])->group(function () {
 
     // Profile Settings & Custom Updates
     Route::post('/profile/update', [UserProfileController::class, 'update'])->name('profile.custom_update');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', fn () => redirect()->route('settings.account'))->name('profile.edit');
 
     // Reports (user-facing)
     Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');

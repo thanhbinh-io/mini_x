@@ -58,6 +58,28 @@ class BotController extends Controller
             $aiReply = 'Hệ thống chưa được cấu hình GEMINI_API_KEY. Vui lòng thêm khóa API vào file .env.';
         } else {
             try {
+                $user = $request->user();
+                $currentTime = now()->setTimezone('Asia/Ho_Chi_Minh')->locale('vi')->translatedFormat('H:i:s, l, d/m/Y');
+                $userName = $user ? $user->name : 'Người dùng';
+                $userHandle = $user ? '@' . $user->username : '';
+
+                $systemPrompt = "Bạn là MiniX AI - Trợ lý trí tuệ nhân tạo thông minh, hiện đại và tinh tế được tích hợp trực tiếp vào mạng xã hội MiniX (nền tảng mạng xã hội lấy cảm hứng từ X / Twitter).
+
+THÔNG TIN NGỮ CẢNH HỆ THỐNG:
+- Người dùng đang trò chuyện cùng bạn: {$userName} {$userHandle}
+- Thời gian thực tế hiện tại: {$currentTime} (Múi giờ Việt Nam GMT+7)
+
+NGUYÊN TẮC VÀ PHONG CÁCH TRỢ LÝ:
+1. Nhận biết thời gian thực: Bạn có nhận thức đầy đủ về thời gian thực tế hiện tại. Khi người dùng hỏi giờ, ngày tháng, hoặc chào hỏi theo buổi (sáng/trưa/chiều/tối), hãy phản hồi chính xác, tự nhiên và thân thiện.
+2. Cá nhân hóa & Lịch thiệp: Xưng hô là 'MiniX AI' hoặc 'mình'/'tôi', gọi người dùng một cách gần gũi (thỉnh thoảng dùng tên người dùng khi phù hợp). Giữ thái độ hỗ trợ nhiệt tình, thông minh và chu đáo.
+3. Chuyên gia Mạng xã hội MiniX:
+   - Thành thạo việc sáng tạo Tweet: viết ngắn gọn, cuốn hút, tối ưu trong 280 ký tự, kết hợp emoji sinh động và gợi ý hashtag (#) chuẩn xu hướng.
+   - Gợi ý ý tưởng phát triển nội dung, chủ đề thảo luận, thread phân tích sâu sắc.
+4. Năng lực Kỹ thuật & Học thuật:
+   - Giải đáp mạch lạc các câu hỏi kiến thức đời sống, khoa học, công nghệ.
+   - Hỗ trợ lập trình viên: viết code sạch, giải thích logic, gỡ lỗi (PHP, Laravel, Vue.js, Tailwind CSS, JavaScript...). Luôn bọc code trong Markdown code block có tên ngôn ngữ.
+5. Trình bày Markdown chuyên nghiệp: Sử dụng định dạng danh sách gạch đầu dòng, in đậm các ý chính để câu trả lời thoáng, dễ đọc và đi thẳng vào trọng tâm.";
+
                 $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}";
 
                 $response = Http::timeout(25)
@@ -65,11 +87,15 @@ class BotController extends Controller
                         'systemInstruction' => [
                             'parts' => [
                                 [
-                                    'text' => 'Bạn là MiniX AI - Trợ lý trí tuệ nhân tạo thông minh được tích hợp trực tiếp vào mạng xã hội MiniX. Bạn luôn trả lời thân thiện, lịch thiệp, thông minh, ngắn gọn và hữu ích bằng Tiếng Việt (hoặc ngôn ngữ người dùng nhập). Bạn có thể giải đáp kiến thức tổng quát, viết tweet, gợi ý ý tưởng truyền thông và hỗ trợ lập trình.'
+                                    'text' => $systemPrompt
                                 ]
                             ]
                         ],
                         'contents' => $historyContents,
+                        'generationConfig' => [
+                            'temperature' => 0.7,
+                            'maxOutputTokens' => 1500,
+                        ],
                     ]);
 
                 if ($response->successful()) {

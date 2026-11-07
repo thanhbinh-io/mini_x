@@ -86,8 +86,11 @@ const showToast = (msg) => {
 
 // Navigation to tweet detail
 const goToStatus = (e) => {
-    // If user clicked a button, link, image, or interactive element, don't navigate
-    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('label') || e.target.closest('video')) {
+    // If a modal is open, or user clicked inside an interactive element: don't navigate
+    if (showReplyModal.value || showQuoteModal.value || showReportModal.value || showEditModal.value || showSendChatModal.value) {
+        return;
+    }
+    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('textarea') || e.target.closest('label') || e.target.closest('video')) {
         return;
     }
     const username = props.tweet.user?.username || 'user';
@@ -343,7 +346,6 @@ const submitQuote = () => {
             quotePreview.value = '';
             isSubmittingQuote.value = false;
             showQuoteModal.value = false;
-            retweetsCount.value += 1;
             showToast('Your quote post was sent');
         },
         onError: () => {
@@ -504,20 +506,27 @@ onUnmounted(() => {
 <template>
     <div
         @click="goToStatus"
-        class="flex w-full border-b border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-[#070707] transition duration-150 px-4 py-3 cursor-pointer text-gray-900 dark:text-white"
+        class="flex flex-col w-full border-b border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-[#070707] transition duration-150 px-4 py-3 cursor-pointer text-gray-900 dark:text-white"
     >
-        <!-- Author Avatar -->
-        <div class="mr-3 flex-shrink-0">
-            <img
-                class="rounded-full w-10 h-10 object-cover bg-gray-700 hover:opacity-90 transition cursor-pointer"
-                :src="tweet.user?.avatar_url || 'https://ui-avatars.com/api/?name=User&background=1C9CEF&color=fff'"
-                :alt="tweet.user?.name || 'User'"
-                @click.stop="router.visit(`/${tweet.user?.username || 'user'}`)"
-            >
+        <!-- Repost Header Banner if this tweet is a repost -->
+        <div v-if="tweet.retweeted_by" class="flex items-center text-xs text-gray-500 font-bold mb-1.5 ml-7">
+            <Sync :size="13" class="mr-1.5 text-gray-500" />
+            <span>{{ tweet.retweeted_by }} reposted</span>
         </div>
 
-        <!-- Main Body -->
-        <div class="w-full min-w-0">
+        <div class="flex w-full">
+            <!-- Author Avatar -->
+            <div class="mr-3 flex-shrink-0">
+                <img
+                    class="rounded-full w-10 h-10 object-cover bg-gray-700 hover:opacity-90 transition cursor-pointer"
+                    :src="tweet.user?.avatar_url || 'https://ui-avatars.com/api/?name=User&background=1C9CEF&color=fff'"
+                    :alt="tweet.user?.name || 'User'"
+                    @click.stop="router.visit(`/${tweet.user?.username || 'user'}`)"
+                >
+            </div>
+
+            <!-- Main Body -->
+            <div class="w-full min-w-0">
             <!-- Header: Author Name, Handle, Time, Options -->
             <div class="flex items-center justify-between mb-1">
                 <div class="flex items-center space-x-1.5 truncate">
@@ -775,6 +784,7 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- Floating Toast Message -->
         <transition name="fade">
@@ -785,14 +795,20 @@ onUnmounted(() => {
                 {{ toastMessage }}
             </div>
         </transition>
+    </div>
 
+    <!-- ─── Reply & Quote Modals (Teleported to body to prevent bubbling) ─── -->
+    <Teleport to="body">
         <!-- Reply Modal -->
         <div
             v-if="showReplyModal"
             class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-start justify-center p-3"
             @click.self="showReplyModal = false"
         >
-            <div class="w-full max-w-lg mt-14 bg-black border border-gray-800 rounded-2xl p-4 shadow-2xl">
+            <div
+                @click.stop
+                class="w-full max-w-lg mt-14 bg-black border border-gray-800 rounded-2xl p-4 shadow-2xl"
+            >
                 <div class="flex items-center justify-between pb-3 border-b border-gray-800">
                     <button
                         type="button"
@@ -868,7 +884,10 @@ onUnmounted(() => {
             class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-start justify-center p-3"
             @click.self="showQuoteModal = false"
         >
-            <div class="w-full max-w-lg mt-14 bg-black border border-gray-800 rounded-2xl p-4 shadow-2xl">
+            <div
+                @click.stop
+                class="w-full max-w-lg mt-14 bg-black border border-gray-800 rounded-2xl p-4 shadow-2xl"
+            >
                 <div class="flex items-center justify-between pb-3 border-b border-gray-800">
                     <button
                         type="button"
@@ -933,7 +952,7 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
-    </div>
+    </Teleport>
 
     <!-- ─── Report Modal ──────────────────────────────────────────────────── -->
     <Teleport to="body">

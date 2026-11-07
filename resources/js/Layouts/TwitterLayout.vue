@@ -296,26 +296,9 @@ const textareaInput = (e) => {
                                 <span>Settings and privacy</span>
                             </Link>
 
-                            <!-- 2. Display -->
-                            <div
-                                @click="showMoreMenu = false; showDisplayModal = true"
-                                class="flex items-center px-3 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-xl text-sm font-semibold text-gray-800 dark:text-gray-200 cursor-pointer transition group"
-                            >
-                                <PaletteOutline :size="22" class="mr-3 text-gray-700 dark:text-gray-300 group-hover:text-[#1C9CEF] transition flex-shrink-0" />
-                                <span>Display</span>
-                            </div>
+                            
 
-                            <!-- 3. Help Center -->
-                            <a
-                                href="https://help.twitter.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                @click="showMoreMenu = false"
-                                class="flex items-center px-3 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-xl text-sm font-semibold text-gray-800 dark:text-gray-200 cursor-pointer transition group"
-                            >
-                                <HelpCircleOutline :size="22" class="mr-3 text-gray-700 dark:text-gray-300 group-hover:text-[#1C9CEF] transition flex-shrink-0" />
-                                <span>Help Center</span>
-                            </a>
+                            
                         </div>
                     </div>
 
@@ -351,35 +334,7 @@ const textareaInput = (e) => {
                             :class="isChatPage ? 'bottom-16 -left-2 w-64' : 'bottom-16 left-0 w-full min-w-[240px]'"
                             class="absolute bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl p-2 z-50 mb-2"
                         >
-                            <div class="flex items-center p-3 border-b border-gray-100 dark:border-gray-800">
-                                <img
-                                    :src="user.avatar_url"
-                                    class="rounded-full w-10 h-10 object-cover bg-gray-700"
-                                    :alt="user.name"
-                                />
-                                <div class="ml-3 truncate">
-                                    <div class="font-bold text-gray-900 dark:text-white text-sm truncate">{{ user.name }}</div>
-                                    <div class="text-xs text-gray-500 truncate">@{{ user.username }}</div>
-                                </div>
-                            </div>
-
-                            <Link
-                                :href="route('users.profile', user.username)"
-                                @click="showUserMenu = false"
-                                class="flex items-center px-3 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-sm text-gray-700 dark:text-gray-200 cursor-pointer mt-1"
-                            >
-                                <Account :size="20" class="mr-2.5 text-gray-400" />
-                                View profile
-                            </Link>
-
-                            <Link
-                                :href="route('profile.edit')"
-                                @click="showUserMenu = false"
-                                class="flex items-center px-3 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-sm text-gray-700 dark:text-gray-200 cursor-pointer"
-                            >
-                                <span class="text-base mr-3">⚙️</span>
-                                Cài đặt tài khoản
-                            </Link>
+                            
 
                             <button
                                 @click="logout"

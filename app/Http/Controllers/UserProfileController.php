@@ -55,12 +55,22 @@ class UserProfileController extends Controller
                     ->orderByDesc('likes.id')
                     ->get();
             } else {
-                // Default 'tweets' tab
-                $tweets = Tweet::where('user_id', $user->id)
+                // Default 'tweets' tab: User's posts + Reposted tweets
+                $userTweets = Tweet::where('user_id', $user->id)
                     ->whereNull('parent_id')
                     ->withInteractionDetails($currentUserId)
-                    ->orderByDesc('id')
                     ->get();
+
+                $retweetedTweets = $user->retweetedTweets()
+                    ->whereNull('parent_id')
+                    ->withInteractionDetails($currentUserId)
+                    ->get()
+                    ->map(function ($t) use ($user, $currentUser) {
+                        $t->retweeted_by = ($currentUser && $user->id === $currentUser->id) ? 'You' : $user->name;
+                        return $t;
+                    });
+
+                $tweets = $userTweets->concat($retweetedTweets)->sortByDesc('id')->values();
             }
         }
 
