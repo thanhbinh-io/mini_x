@@ -134,7 +134,9 @@ php artisan config:clear
 
 ---
 
-## 🗄️ Khởi Tạo Cơ Sở Dữ Liệu & Chạy Ứng Dụng
+## 💻 Hướng Dẫn Chạy Ứng Dụng Trên Máy Cục Bộ (Localhost)
+
+Sau khi hoàn tất cài đặt dependencies (Bước 1 - Bước 3), thực hiện các bước sau để khởi chạy ứng dụng trực tiếp trên máy của bạn:
 
 ### Bước 4: Khởi tạo Cơ sở dữ liệu
 
@@ -277,3 +279,11 @@ mini_x/
 │   └── auth.php                # Routes xác thực đăng nhập, đăng ký, quên mật khẩu
 └── tailwind.config.js          # Cấu hình Tailwind CSS v3 hỗ trợ darkMode: 'class'
 ```
+
+---
+
+## 📄 Giấy Phép (License)
+
+Dự án **MiniX** được phân phối theo giấy phép mã nguồn mở **[MIT License](LICENSE)**. Xem chi tiết điều khoản sử dụng và quyền hạn tại file [LICENSE](LICENSE).
+
+Copyright (c) 2026 Pham Thanh Binh, Vo Tan Dat, Nguyen Quoc Khanh, Huynh Trieu An.
