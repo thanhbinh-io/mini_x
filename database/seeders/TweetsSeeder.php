@@ -26,7 +26,7 @@ class TweetsSeeder extends Seeder
             [
                 'name' => 'Demo User',
                 'username' => 'demouser',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Abcd1234@'),
                 'email_verified_at' => now(),
                 'bio' => "Full-stack developer exploring Laravel 9, Vue 3, and Inertia.js.\nBuilding modern web applications.",
                 'location' => 'San Francisco, CA',
@@ -41,7 +41,7 @@ class TweetsSeeder extends Seeder
             [
                 'name' => 'Taylor Otwell',
                 'username' => 'taylorotwell',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Abcd1234@'),
                 'email_verified_at' => now(),
                 'bio' => 'Creator of @laravelphp. Loving PHP, Vue.js, and elegant full-stack architecture.',
                 'location' => 'Arkansas, USA',
@@ -56,7 +56,7 @@ class TweetsSeeder extends Seeder
             [
                 'name' => 'Evan You',
                 'username' => 'youyuxi',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Abcd1234@'),
                 'email_verified_at' => now(),
                 'bio' => 'Creator of @vuejs & @vitejs. Passionate about developer tooling and reactive web UI.',
                 'location' => 'Singapore',
@@ -71,7 +71,7 @@ class TweetsSeeder extends Seeder
             [
                 'name' => 'Elon Musk',
                 'username' => 'elonmusk',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Abcd1234@'),
                 'email_verified_at' => now(),
                 'bio' => 'Technoking of Tesla, owner of X.',
                 'location' => 'Austin, TX',
@@ -86,7 +86,7 @@ class TweetsSeeder extends Seeder
             [
                 'name' => 'John Weeks',
                 'username' => 'johnweeksdev',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Abcd1234@'),
                 'email_verified_at' => now(),
                 'bio' => 'Software Engineer & Tech Educator building full-stack software walkthroughs.',
                 'location' => 'London, UK',

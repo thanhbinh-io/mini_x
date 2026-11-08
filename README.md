@@ -231,20 +231,17 @@ Dành cho điện thoại hoặc laptop khác kết nối chung một mạng Wi-
 
 ## 👤 Danh Sách Tài Khoản Thử Nghiệm (Demo Accounts)
 
-Mật khẩu mặc định cho toàn bộ tài khoản demo là: **`password`**
+Mật khẩu mặc định cho toàn bộ tài khoản demo là: **`Abcd1234@`**
 
 | Vai trò / Quyền | Tên hiển thị | Tên tài khoản | Email đăng nhập | Mật khẩu | Chức năng nổi bật có thể test |
 |---|---|---|---|---|---|
-| 👑 **Admin Quản trị** | Demo User | `@demouser` | `demo@example.com` | `password` | Truy cập **Admin Dashboard** (`/admin`), duyệt báo cáo, khóa/mở khóa tài khoản, xóa bài vi phạm. |
-| 🧑 **Người dùng mẫu 1** | Elon Musk | `@elonmusk` | `elon@x.com` | `password` | Đăng tweet, đính kèm media, tương tác Like/Retweet, nhắn tin 1-1. |
-| 🧑 **Người dùng mẫu 2** | Taylor Otwell | `@taylorotwell` | `taylor@laravel.com` | `password` | Thử nghiệm follow/unfollow, đăng tweet bình luận. |
-| 🧑 **Người dùng mẫu 3** | Evan You | `@youyuxi` | `evan@vuejs.org` | `password` | Trò chuyện trực tiếp (DM) và kiểm tra tính năng riêng tư. |
+| 👑 **Admin Quản trị** | Demo User | `@demouser` | `demo@example.com` | `Abcd1234@` | Truy cập **Admin Dashboard** (`/admin`), duyệt báo cáo, khóa/mở khóa tài khoản, xóa bài vi phạm. |
+| 🧑 **Người dùng mẫu 1** | Elon Musk | `@elonmusk` | `elon@x.com` | `Abcd1234@` | Đăng tweet, đính kèm media, tương tác Like/Retweet, nhắn tin 1-1. |
+| 🧑 **Người dùng mẫu 2** | Taylor Otwell | `@taylorotwell` | `taylor@laravel.com` | `Abcd1234@` | Thử nghiệm follow/unfollow, đăng tweet bình luận. |
+| 🧑 **Người dùng mẫu 3** | Evan You | `@youyuxi` | `evan@vuejs.org` | `Abcd1234@` | Trò chuyện trực tiếp (DM) và kiểm tra tính năng riêng tư. |
 | 🤖 **MiniX AI Bot** | MiniX AI | `@geminibot` | *Tích hợp sẵn* | *Yêu cầu đăng nhập* | Trò chuyện trực tiếp tại mục **MiniX AI** trên thanh điều hướng (sau khi đăng nhập một tài khoản bất kỳ). |
 
-> [!TIP]
-> **Quy chuẩn mật khẩu:** Khi người dùng tự tay đăng ký tài khoản mới (`/register`) hoặc đổi mật khẩu trong phần cài đặt (`/settings/account`), hệ thống áp dụng đầy đủ tiêu chuẩn bảo mật mạnh của Laravel (`Rules\Password::defaults()`).
 
----
 
 ## ⚠️ Các Giới Hạn Hiện Tại Của Hệ Thống (Current Limitations)
 
